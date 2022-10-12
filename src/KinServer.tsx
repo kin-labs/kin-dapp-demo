@@ -220,6 +220,10 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
 
       {serverRunning ? (
         <>
+          <br />
+          <br />
+          <br />
+          <br />
           <KinAction
             open
             title="Initialise your Kin Client on the Server"
@@ -268,7 +272,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
       {serverAppIndex && serverKinNetwork ? (
         <>
           <br />
-          <hr />
+          <br />
           <h3 className="Kin-section">{`Manage Kin Accounts`}</h3>
 
           <KinAction
@@ -380,7 +384,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
           />
 
           <br />
-          <hr />
+          <br />
 
           <h3 className="Kin-section">{`Make payments and earn Kin via the KRE`}</h3>
 
@@ -683,6 +687,10 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             disabled={!serverAppIndex || userAccountNames.length < 2}
           />
 
+          <br />
+          <br />
+          <h3 className="Kin-section">{`Get Transaction Details and History`}</h3>
+
           <KinAction
             title="Get Transaction Details"
             subTitle="Transactions may take a little time to appear"
@@ -788,7 +796,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             displayOutput={gotHistory ? gotHistory : null}
           />
           <br />
-          <hr />
+          <br />
         </>
       ) : null}
     </div>

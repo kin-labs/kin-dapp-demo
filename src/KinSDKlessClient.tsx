@@ -100,7 +100,7 @@ function KinSDKlessApp({
         </span>
       </div>
       <br />
-      <hr />
+      <br />
       <h3 className="Kin-section">
         {`Make payments and earn Kin via the KRE`}
       </h3>
@@ -234,7 +234,7 @@ function KinSDKlessApp({
         ]}
       />
       <br />
-      <hr />
+      <br />
       <h3 className="Kin-section">{`Additional Kin Related Actions`}</h3>
       <KinAction
         title="View Balance"
@@ -415,7 +415,7 @@ export function KinSDKlessAppWithWallet({
       <KinAction
         open
         title="Set your Solana Network then Connect to a Wallet"
-        subTitle="Make sure your wallet is connected to the same network  | ** Devnet Coming Soon ** | Make sure you've registered your App on the Kin Developer Portal | Remember to add your environment variable for your App Index"
+        subTitle="Make sure your wallet is connected to the same network | Make sure you've registered your App on the Kin Developer Portal | Remember to add your environment variable for your App Index"
         subTitleLinks={kinLinks.devPortal}
         disabled
         actions={[
@@ -432,7 +432,6 @@ export function KinSDKlessAppWithWallet({
             value: selectedSolanaNetwork,
             options: solanaNetworks,
             onChangeSolanaNetwork: setSelectedSolanaNetwork,
-            disabledInput: true,
           },
         ]}
       />

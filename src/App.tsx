@@ -41,7 +41,7 @@ function App() {
 
   const [kineticClient, setKinClient] = useState<KineticSdk | null>(null);
   const [kineticClientNetwork, setKinClientNetwork] = useState('Test');
-  const [solanaNetwork, setSolanaNetwork] = useState<SolanaNetwork>('Mainnet');
+  const [solanaNetwork, setSolanaNetwork] = useState<SolanaNetwork>('Devnet');
 
   return (
     <div className="App">

@@ -120,6 +120,10 @@ export function KinClientApp({
         )}
       </div>
 
+      <br />
+      <br />
+      <br />
+
       <KinAction
         open
         title="Initialise Your Kin Client with your App Index"
@@ -165,7 +169,7 @@ export function KinClientApp({
       {kineticClient ? (
         <>
           <br />
-          <hr />
+          <br />
           <h3 className="Kin-section">{`Manage Kin Accounts`}</h3>
           <KinAction
             title="Create a Kin Account for a User"
@@ -274,7 +278,7 @@ export function KinClientApp({
             }
           />
           <br />
-          <hr />
+          <br />
           <h3 className="Kin-section">{`Make payments and earn Kin via the KRE`}</h3>
           {(() => {
             if (!userAccounts || userAccounts.length < 2) {
@@ -407,7 +411,7 @@ export function KinClientApp({
             disabled={!payAmountP2P || !userAccounts[1]}
           />
           <br />
-          <hr />
+          <br />
           <h3 className="Kin-section">{`Get Transaction Details and History`}</h3>
           <KinAction
             title="View Transaction"
@@ -517,7 +521,7 @@ export function KinClientApp({
             displayOutput={historyData ? historyData : null}
           />
           <br />
-          <hr />
+          <br />
           <h3 className="Kin-section">{`Additional actions not using Kin SDK`}</h3>
           <KinAction
             title="View User Keys"
@@ -559,7 +563,7 @@ export function KinClientApp({
             displayOutput={seeWalletDetails ? seeWalletDetails : null}
           />
           <br />
-          <hr />
+          <br />
         </>
       ) : null}
     </div>
