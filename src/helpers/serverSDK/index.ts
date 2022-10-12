@@ -12,7 +12,7 @@ export interface User {
 interface StatusResponse {
   data: {
     appIndex: number;
-    env: number;
+    env: number | string;
     users: User[];
     transactions: string[];
   };
@@ -119,6 +119,30 @@ export async function handleGetBalance({
 
     const url = `${baseUrl}/balance?user=${user}`;
     const response: BalanceResponse = await axios.get(url);
+    onSuccess(response.data);
+  } catch (error) {
+    console.log('🚀 ~ error', error);
+    onFailure();
+  }
+}
+interface HandleGetHistory {
+  user: string;
+  onSuccess: (arg: string) => void;
+  onFailure: () => void;
+}
+
+export async function handleGetHistory({
+  onSuccess,
+  onFailure,
+  user,
+}: HandleGetHistory) {
+  console.log('🚀 ~ handleGetHistory', user);
+  try {
+    const baseUrl = process.env.REACT_APP_SERVER_URL;
+    if (!baseUrl) throw new Error('No URL');
+
+    const url = `${baseUrl}/history?user=${user}`;
+    const response: Response = await axios.get(url);
     onSuccess(response.data);
   } catch (error) {
     console.log('🚀 ~ error', error);

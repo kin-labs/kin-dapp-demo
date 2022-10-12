@@ -7,7 +7,7 @@ import Loader from 'react-loader-spinner';
 import { colors, kinLinks, SolanaNetwork } from './constants';
 import { MakeToast } from './helpers';
 
-import logo from './kin-white.svg';
+// import logo from './kin-white.svg';
 import { Toggle } from './Toggle';
 import { KinServerApp } from './KinServer';
 import { KinClientApp } from './KinWebSDKClient';
@@ -35,7 +35,7 @@ function App() {
 
   const appTypes = [
     'Backend Server - Kin SDK',
-    'DApp - Kin Web SDK',
+    'DApp - Kin SDK',
     'DApp - SDK-less',
   ];
   const [selectedAppType, setSelectedAppType] = useState(appTypes[1]);
@@ -61,7 +61,13 @@ function App() {
       <nav className="App-nav">
         <div className="App-nav-container">
           <div className="App-logo-container">
-            <img src={logo} className="App-logo" alt="logo" />
+            <img
+              src={
+                'https://developer.kin.org/branding/kin-logo-white-sideicon.svg'
+              }
+              className="App-logo"
+              alt="logo"
+            />
           </div>
           <span>DApp Playground</span>
           <span>
@@ -77,18 +83,6 @@ function App() {
             selected={selectedAppType}
             onChange={setSelectedAppType}
           />
-          <span>
-            {`If you're not sure, you might want to have a look at `}
-            <Links
-              links={[
-                {
-                  name: 'this',
-                  link:
-                    'https://developer.kin.org/docs/architecture-overview/#architecture-overview',
-                },
-              ]}
-            />
-          </span>
 
           {(() => {
             if (selectedAppType === appTypes[0]) {

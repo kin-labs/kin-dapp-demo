@@ -402,9 +402,7 @@ export function KinSDKlessAppWithWallet({
         <br />
 
         <br />
-        {`Doesn't support `}
-        <Links links={kinLinks.agora} />
-        {` - you'll have to subsidise your transactions with SOL`}
+        {`You'll have to subsidise your own transactions with SOL`}
         <br />
         <br />
         {`Transactions are still eligible for reward via the Kin Rewards Engine`}

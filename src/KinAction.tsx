@@ -38,7 +38,7 @@ interface KinActionProps {
   disabled?: boolean;
   links?: Link[];
   linksTitle?: string;
-  displayOutput?: object | null;
+  displayOutput?: object | string | null;
   addInput?: () => void;
 }
 export function KinAction({
@@ -205,10 +205,14 @@ export function KinAction({
           <p className="Kin-action-display">{displayValue}</p>
         ) : null}
 
-        {displayOutput ? (
+        {displayOutput && typeof displayOutput !== 'string' ? (
           <pre className="Kin-action-display">
             {JSON.stringify(displayOutput, null, 2)}
           </pre>
+        ) : null}
+
+        {displayOutput && typeof displayOutput === 'string' ? (
+          <pre className="Kin-action-display">displayOutput</pre>
         ) : null}
       </div>
     </Collapsible>

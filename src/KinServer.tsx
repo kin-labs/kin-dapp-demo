@@ -16,6 +16,7 @@ import {
   getSanitisedBatch,
   handleSendBatch,
   handleGetTransaction,
+  handleGetHistory,
   Transaction,
   User,
   BatchPayment,
@@ -32,6 +33,7 @@ interface KinServerAppProps {
 export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
   const [serverRunning, setServerRunning] = useState(false);
   const [serverAppIndex, setServerAppIndex] = useState(0);
+  const [kinNetwork, setKinNetwork] = useState('Test');
   const [serverKinNetwork, setServerKinNetwork] = useState<string | null>(null);
 
   const [userAccounts, setUserAccounts] = useState<User[]>([]);
@@ -41,13 +43,21 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
 
   const [transactions, setTransactions] = useState<string[]>([]);
   const [shouldUpdate, setShouldUpdate] = useState(true);
+
   useEffect(() => {
     if (shouldUpdate) {
       setLoading(true);
       getServerStatus({
         onSuccess: ({ status, data }) => {
-          if (data?.env === 1) setServerKinNetwork('Test');
-          if (data?.env === 0) setServerKinNetwork('Prod');
+          console.log('🚀 ~ data', data);
+          if (data?.env === 'devnet') {
+            setServerKinNetwork('Devnet');
+            setKinNetwork('Devnet');
+          }
+          if (data?.env === 'mainnet') {
+            setServerKinNetwork('Mainnet');
+            setKinNetwork('Mainnet');
+          }
 
           setServerAppIndex(data.appIndex);
           setUserAccounts(data.users);
@@ -78,12 +88,14 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
 
     return () => {};
   }, [shouldUpdate]);
-  const [kinNetwork, setKinNetwork] = useState('Test');
 
   const [newUserName, setNewUserName] = useState('');
 
   const [balanceUser, setBalanceUser] = useState('App');
   const [displayBalance, setDisplayBalance] = useState('');
+
+  const [historyUser, setHistoryUser] = useState('App');
+  const [gotHistory, setGotHistory] = useState('');
 
   const [airdropUser, setAirdropUser] = useState('App');
   const [airdropAmount, setAirdropAmount] = useState('');
@@ -128,19 +140,13 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
         {`A common use case would be to use a Client SDK (Web / Mobile) for non-custodial private key creation, and the Server SDK to provide additional functionality, e.g. payouts to users, etc`}
         <br />
         <br />
-        {`Supports `}
-        <Links links={kinLinks.agora} />
-        {` - account creation and transaction fees can be subsidized to make it simple for a new user to get on board and transact Kin`}
-        <br />
-        <br />
+
         {`Transactions will be eligible for reward via the Kin Rewards Engine`}
         <br />
         <Links links={kinLinks.KRE} />
         <br />
         <br />
         <span>
-          <Links links={kinLinks.serverSDKRepos} linksTitle="Server SDKs: " />
-          <br />
           <Links
             links={kinLinks.serverSDKTutorials}
             linksTitle="Server SDK Tutorials: "
@@ -252,7 +258,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
               {
                 name: 'Network',
                 value: kinNetwork,
-                options: ['Test', 'Prod'],
+                options: ['Devnet', 'Mainnet'],
                 onChange: setKinNetwork,
               },
             ]}
@@ -386,7 +392,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             return null;
           })()}
 
-          {kinNetwork === 'Test' ? (
+          {kinNetwork === 'Test' || kinNetwork === 'Devnet' ? (
             <KinAction
               title="Request Airdrop (Test Network Only)"
               subTitle="Get some kin so you can start testing your transaction code"
@@ -561,7 +567,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             title="Pay Kin from User To App - Spend Transaction"
             linksTitle={kinLinks.serverCodeSamples.title}
             links={kinLinks.serverCodeSamples.methods.submitPayment}
-            subTitle="Requires 'sign_transaction' Webhook if you've added it on the Kin Developer Portal"
+            subTitle="Requires 'verify' Webhook if you've added it on the Kin Developer Portal"
             subTitleLinks={kinLinks.webhooks}
             actions={[
               {
@@ -612,7 +618,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             title="Send Kin from User to User -  P2P Transaction"
             linksTitle={kinLinks.serverCodeSamples.title}
             links={kinLinks.serverCodeSamples.methods.submitPayment}
-            subTitle="Requires 'sign_transaction' Webhook if you've added it on the Kin Developer Portal"
+            subTitle="Requires 'verify' Webhook if you've added it on the Kin Developer Portal"
             subTitleLinks={kinLinks.webhooks}
             actions={[
               {
@@ -740,6 +746,46 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
               },
             ]}
             displayOutput={gotTransaction ? gotTransaction : null}
+          />
+
+          <KinAction
+            title="Get an Account History"
+            linksTitle={kinLinks.serverCodeSamples.title}
+            links={kinLinks.serverCodeSamples.methods.getBalance}
+            actions={[
+              {
+                name: 'Get History',
+                onClick: () => {
+                  setLoading(true);
+                  handleGetHistory({
+                    user: historyUser,
+                    onSuccess: (history) => {
+                      setLoading(false);
+                      setGotHistory(history);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({
+                        text: "Couldn't get History!",
+                        happy: false,
+                      });
+                    },
+                  });
+                },
+              },
+            ]}
+            inputs={[
+              {
+                name: 'User',
+                value: historyUser,
+                options: ['App', ...userAccountNames],
+                onChange: (user) => {
+                  setHistoryUser(user);
+                  setGotHistory('');
+                },
+              },
+            ]}
+            displayOutput={gotHistory ? gotHistory : null}
           />
           <br />
           <hr />

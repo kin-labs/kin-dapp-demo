@@ -22,7 +22,7 @@ or
 
 ## Prep
 
-- Your App is registered on the [Kin Developer Portal](https://portal.kin.org/) so you can take advantage of the [Kin Rewards Engine](https://developer.kin.org/docs/the-kre-explained/) and get your App Index
+- Your App is registered on the [Kin Developer Portal](https://portal.kin.org/) so you can take advantage of the [Kin Rewards Engine](https://developer.kin.org/docs/essentials/kin-rewards-engine/) and get your App Index
 - Environment variable for your server URL (if testing a Back End Server)
 - Environment variable for your App Index (if testing a Client DApp or SDK-less DApp )
 

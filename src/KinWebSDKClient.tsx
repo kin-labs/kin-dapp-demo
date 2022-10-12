@@ -91,11 +91,6 @@ export function KinClientApp({
         <br />
         <br />
 
-        {`Supports `}
-        <Links links={kinLinks.agora} />
-        {` - account creation and transaction fees can be subsidized to make it simple for a new user to get on board and transact with Kin`}
-        <br />
-        <br />
         {`Transactions will be eligible for reward via the Kin Rewards Engine`}
         <br />
         <Links links={kinLinks.KRE} />
@@ -153,7 +148,7 @@ export function KinClientApp({
           {
             name: 'Network',
             value: kinNetwork,
-            options: ['Test', 'Prod'],
+            options: ['Devnet', 'Mainnet'],
             onChange: setKinNetwork,
           },
         ]}

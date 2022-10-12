@@ -26,20 +26,20 @@ export const kinLinks = {
       link: 'https://discord.com/invite/kdRyUNmHDn',
     },
   ],
-  serverSDKRepos: [
-    { name: 'Node', link: 'https://github.com/kinecosystem/kin-node' },
-    { name: 'Python', link: 'https://github.com/kinecosystem/kin-python' },
-    { name: 'Go', link: 'https://github.com/kinecosystem/kin-go' },
-  ],
+
   serverSDKTutorials: [
-    { name: 'Node', link: 'https://developer.kin.org/tutorials/node/' },
-    { name: 'Python', link: 'https://developer.kin.org/tutorials/python/' },
-    { name: 'Go', link: 'https://developer.kin.org/tutorials/go/' },
+    {
+      name: 'TypeScript',
+      link: 'https://developer.kin.org/docs/developers/typescript',
+    },
+    {
+      name: 'Python',
+      link: 'https://developer.kin.org/docs/developers/python',
+    },
   ],
   webSDK: [
-    { name: 'Web SDK Repo', link: 'https://github.com/kin-sdk/kin-sdk-web' },
     {
-      name: 'Web SDK Tutorial',
+      name: 'TypeScript SDK Tutorial',
       link: 'https://developer.kin.org/tutorials/web/',
     },
   ],
@@ -49,16 +49,15 @@ export const kinLinks = {
       link: 'https://kin.org/introducing-kin-sdk-less-transactions/',
     },
   ],
-  agora: [
-    {
-      name: 'Agora',
-      link: 'https://developer.kin.org/docs/architecture-overview/',
-    },
-  ],
+
   webhooks: [
     {
-      name: 'Agora Webhooks',
-      link: 'https://developer.kin.org/docs/agora-webhook-reference/',
+      name: 'TypeScript Webhooks',
+      link: 'https://developer.kin.org/docs/developers/typescript#webhooks',
+    },
+    {
+      name: 'Python Webhooks',
+      link: 'https://developer.kin.org/docs/developers/python#webhooks',
     },
   ],
   custodialWallets: [
@@ -71,11 +70,11 @@ export const kinLinks = {
   KRE: [
     {
       name: 'Kin Rewards Engine Explained',
-      link: 'https://developer.kin.org/docs/the-kre-explained/',
+      link: 'https://developer.kin.org/docs/essentials/kin-rewards-engine',
     },
     {
       name: 'KRE Checklist',
-      link: 'https://developer.kin.org/docs/transaction-guide/',
+      link: 'https://developer.kin.org/docs/essentials/kre-checklist',
     },
   ],
   walletAdapter: [
@@ -93,7 +92,7 @@ export const kinLinks = {
     { name: 'Kin Developer Portal', link: 'https://portal.kin.org/' },
     {
       name: 'How to Register Your App',
-      link: 'https://developer.kin.org/tutorials/#why-register-your-app',
+      link: 'https://developer.kin.org/docs/essentials/kre-app-registration',
     },
   ],
   solanaRent: [
@@ -104,16 +103,12 @@ export const kinLinks = {
   ],
   demoServers: [
     {
-      name: 'Node',
-      link: 'https://github.com/kin-starters/kin-demo-node-sdk',
+      name: 'TypeScript',
+      link: 'https://github.com/kin-starters/kinetic-demo-node-sdk',
     },
     {
       name: 'Python',
-      link: 'https://github.com/kin-starters/kin-demo-python-sdk',
-    },
-    {
-      name: 'Go',
-      link: 'https://github.com/kin-starters/kin-demo-go-sdk',
+      link: 'https://github.com/kin-starters/kinetic-demo-python-sdk',
     },
   ],
   serverCodeSamples: {
@@ -121,122 +116,98 @@ export const kinLinks = {
     methods: {
       setUpKinClient: [
         {
-          name: 'Node Demo',
+          name: 'TypeScript',
           link:
-            'https://github.com/kin-starters/kin-demo-node-sdk/blob/master/src/index.ts#L112-L154',
+            'https://developer.kin.org/docs/developers/typescript#instantiate-the-kinetic-client',
         },
         {
-          name: 'Python Demo',
+          name: 'Python',
           link:
-            'https://github.com/kin-starters/kin-demo-python-sdk/blob/master/api.py#L155-L210',
-        },
-        {
-          name: 'Go Demo',
-          link:
-            'https://github.com/kin-starters/kin-demo-go-sdk/blob/master/main.go#L188-L221',
+            'https://developer.kin.org/docs/developers/python#instantiate-the-kinetic-client',
         },
       ],
       createAccount: [
         {
-          name: 'Node Demo',
+          name: 'TypeScript',
           sdk: 'https://github.com/kinecosystem/kin-node',
           link:
-            'https://github.com/kin-starters/kin-demo-node-sdk/blob/master/src/index.ts#L156-L190',
+            'https://developer.kin.org/docs/developers/typescript#create-account',
         },
         {
-          name: 'Python Demo',
+          name: 'Python',
           link:
-            'https://github.com/kin-starters/kin-demo-python-sdk/blob/master/api.py#L213-L242',
-        },
-        {
-          name: 'Go Demo',
-          link:
-            'https://github.com/kin-starters/kin-demo-go-sdk/blob/master/main.go#L256-L281',
+            'https://developer.kin.org/docs/developers/python#create-account',
         },
       ],
       getBalance: [
         {
-          name: 'Node Demo',
+          name: 'TypeScript',
           link:
-            'https://github.com/kin-starters/kin-demo-node-sdk/blob/master/src/index.ts#L192-L229',
+            'https://developer.kin.org/docs/developers/typescript#check-balance',
         },
         {
-          name: 'Python Demo',
+          name: 'Python',
           link:
-            'https://github.com/kin-starters/kin-demo-python-sdk/blob/master/api.py#L245-L272',
-        },
-        {
-          name: 'Go Demo',
-          link:
-            'https://github.com/kin-starters/kin-demo-go-sdk/blob/master/main.go#L223-L254',
+            'https://developer.kin.org/docs/developers/python#check-balance',
         },
       ],
       requestAirdrop: [
         {
-          name: 'Node Demo',
+          name: 'TypeScript',
           link:
-            'https://github.com/kin-starters/kin-demo-node-sdk/blob/master/src/index.ts#L231-L287',
+            'https://developer.kin.org/docs/developers/typescript#airdrop-funds-devnet',
         },
         {
-          name: 'Python Demo',
+          name: 'Python',
           link:
-            'https://github.com/kin-starters/kin-demo-python-sdk/blob/master/api.py#L275-L313',
-        },
-        {
-          name: 'Go Demo',
-          link:
-            'https://github.com/kin-starters/kin-demo-go-sdk/blob/master/main.go#L283-L319',
+            'https://developer.kin.org/docs/developers/python#airdrop-funds-devnet',
         },
       ],
       getTransaction: [
         {
-          name: 'Node Demo',
+          name: 'TypeScript',
           link:
-            'https://github.com/kin-starters/kin-demo-node-sdk/blob/master/src/index.ts#L289-L340',
+            'https://developer.kin.org/docs/developers/typescript#get-transaction-details',
         },
         {
-          name: 'Python Demo',
+          name: 'Python',
           link:
-            'https://github.com/kin-starters/kin-demo-python-sdk/blob/master/api.py#L438-L465',
+            'https://developer.kin.org/docs/developers/python#get-transaction-details',
+        },
+      ],
+      getHistory: [
+        {
+          name: 'TypeScript',
+          link:
+            'https://developer.kin.org/docs/developers/typescript#get-account-history',
         },
         {
-          name: 'Go Demo',
+          name: 'Python',
           link:
-            'https://github.com/kin-starters/kin-demo-go-sdk/blob/master/main.go#L494-L524',
+            'https://developer.kin.org/docs/developers/python#get-account-history',
         },
       ],
       submitPayment: [
         {
-          name: 'Node Demo',
+          name: 'TypeScript',
           link:
-            'https://github.com/kin-starters/kin-demo-node-sdk/blob/master/src/index.ts#L357-L413',
+            'https://developer.kin.org/docs/developers/typescript#transfer-kin',
         },
         {
-          name: 'Python Demo',
-          link:
-            'https://github.com/kin-starters/kin-demo-python-sdk/blob/master/api.py#L326-L375',
-        },
-        {
-          name: 'Go Demo',
-          link:
-            'https://github.com/kin-starters/kin-demo-go-sdk/blob/master/main.go#L328-L388',
+          name: 'Python',
+          link: 'https://developer.kin.org/docs/developers/python#transfer-kin',
         },
       ],
       submitBatch: [
         {
-          name: 'Node Demo',
+          name: 'TypeScript',
           link:
-            'https://github.com/kin-starters/kin-demo-node-sdk/blob/master/src/index.ts#L415-L465',
+            'https://developer.kin.org/docs/developers/typescript#transfer-kin-batch',
         },
         {
-          name: 'Python Demo',
+          name: 'Python',
           link:
-            'https://github.com/kin-starters/kin-demo-python-sdk/blob/master/api.py#L386-L424',
-        },
-        {
-          name: 'Go Demo',
-          link:
-            'https://github.com/kin-starters/kin-demo-go-sdk/blob/master/main.go#L416-L467',
+            'https://developer.kin.org/docs/developers/python#transfer-kin-batch',
         },
       ],
     },

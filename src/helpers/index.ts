@@ -88,6 +88,10 @@ export function openExplorer({
   kinNetwork,
   solanaNetwork,
 }: OpenExplorer) {
+  console.log('🚀 ~ openExplorer');
+  console.log('🚀 ~ transaction', transaction);
+  console.log('🚀 ~ kinNetwork', kinNetwork);
+  console.log('🚀 ~ solanaNetwork', solanaNetwork);
   if (transaction) {
     window.open(
       `https://explorer.solana.com/tx/${transaction}${(() => {
@@ -96,6 +100,9 @@ export function openExplorer({
         }
         if (solanaNetwork && solanaNetwork !== 'Mainnet') {
           return `?cluster=${solanaNetwork.toLowerCase()}`;
+        }
+        if (kinNetwork && kinNetwork === 'Devnet') {
+          return `?cluster=${kinNetwork.toLowerCase()}`;
         }
         return '';
       })()}`
