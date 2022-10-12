@@ -24,8 +24,10 @@ export async function handleSetUpKinClient({
         endpoint,
         index,
       };
+      console.log('🚀 ~ config', config);
 
       const client = await KineticSdk.setup(config);
+      console.log('🚀 ~ client', client);
 
       onSuccess({ client });
     } else {

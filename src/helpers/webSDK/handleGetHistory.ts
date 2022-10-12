@@ -2,7 +2,7 @@ import { KineticSdk } from '@kin-kinetic/sdk';
 
 import { getPublicKey } from '..';
 
-interface HandleGetBalance {
+interface HandleGetHistory {
   kineticClient: KineticSdk;
   user: string;
   kinNetwork: string;
@@ -10,25 +10,22 @@ interface HandleGetBalance {
   onFailure: () => void;
 }
 
-export async function handleGetBalance({
+export async function handleGetHistory({
   onSuccess,
   onFailure,
   user,
   kineticClient,
   kinNetwork,
-}: HandleGetBalance) {
-  console.log('🚀 ~ handleGetBalance', user);
+}: HandleGetHistory) {
+  console.log('🚀 ~ handleGetHistory', user);
   try {
     const publicKey = getPublicKey(user, kinNetwork);
 
-    const { balance } = await kineticClient.getBalance({
+    const history = await kineticClient.getHistory({
       account: publicKey,
     });
 
-    const balanceInKin = Number(balance) / 100000;
-    console.log('🚀 ~ balanceInKin', balanceInKin);
-
-    onSuccess(balanceInKin.toString());
+    onSuccess(JSON.stringify(history));
   } catch (error) {
     console.log('🚀 ~ error', error);
     onFailure();

@@ -1,7 +1,8 @@
 import { KineticSdk, MakeTransferOptions } from '@kin-kinetic/sdk';
 import { TransactionType } from '@kin-tools/kin-memo';
 import { Commitment } from '@kin-kinetic/solana';
-import { saveTransaction, getPublicKey, getPrivateKey } from '..';
+import { saveTransaction, getKeypair } from '..';
+import { Keypair } from '@kin-kinetic/keypair';
 
 export interface HandleSendKin {
   kineticClient: KineticSdk;
@@ -26,8 +27,11 @@ export async function handleSendKin({
 }: HandleSendKin) {
   console.log('🚀 ~ handleSendKin', type, from, to, amount);
   try {
-    const owner = getPrivateKey(from, kinNetwork);
-    const destination = getPublicKey(to, kinNetwork);
+    const keypair = getKeypair(from, kinNetwork);
+    const owner = keypair?.mnemonic && Keypair.fromMnemonic(keypair.mnemonic);
+    console.log('🚀 ~ owner', owner);
+    const destination = to;
+    console.log('🚀 ~ destination', destination);
 
     let transactionType = TransactionType.None;
     if (type === 'Earn') transactionType = TransactionType.Earn;
@@ -44,14 +48,18 @@ export async function handleSendKin({
       };
       console.log('🚀 ~ transactionOptions', transactionOptions);
 
+      console.log(
+        '🚀 ~ kineticClient.makeTransfer',
+        kineticClient.makeTransfer
+      );
       const transfer = await kineticClient.makeTransfer(transactionOptions);
       console.log('🚀 ~ transfer', transfer);
 
       if (transfer?.signature) {
         saveTransaction(transfer.signature, kinNetwork);
-        onSuccess();
       }
     }
+    onSuccess();
   } catch (error) {
     console.log('🚀 ~ error', error);
     onFailure(error);

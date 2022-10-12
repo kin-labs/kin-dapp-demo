@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { KineticSdk } from '@kin-kinetic/sdk';
-import { Keypair } from '@kin-kinetic/keypair';
 
 import { KinAction } from './KinAction';
 import { Links } from './Links';
@@ -23,6 +22,8 @@ import { handleRequestAirdrop } from './helpers/webSDK/handleRequestAirdrop';
 import { handleSendKin, HandleSendKin } from './helpers/webSDK/handleSendKin';
 
 import './Kin.scss';
+import { handleGetTransactionData } from './helpers/webSDK/handleGetTransactionData';
+import { handleGetHistory } from './helpers/webSDK/handleGetHistory';
 
 interface KinClientAppProps {
   makeToast: (arg: MakeToast) => void;
@@ -54,7 +55,7 @@ export function KinClientApp({
       setShouldUpdate(false);
     }
   }, [shouldUpdate]);
-  const [kinNetwork, setKinNetwork] = useState('Test');
+  const [kinNetwork, setKinNetwork] = useState('Devnet');
 
   const [newUserName, setNewUserName] = useState('');
 
@@ -70,12 +71,14 @@ export function KinClientApp({
 
   const [inputTransaction, setInputTransaction] = useState('');
   const [selectedTransaction, setSelectedTransaction] = useState('');
+  const [transactionData, setTransactionData] = useState('');
+
+  const [historyUser, setHistoryUser] = useState('');
+  const [historyData, setHistoryData] = useState('');
 
   const [seeWallet, setSeeWallet] = useState('');
 
-  const [seeWalletDetails, setSeeWalletDetails] = useState<Keypair | null>(
-    null
-  );
+  const [seeWalletDetails, setSeeWalletDetails] = useState('');
 
   return (
     <div className="Kin">
@@ -174,7 +177,7 @@ export function KinClientApp({
                   const exists = userAccounts.includes(newUserName);
                   if (exists) {
                     makeToast({
-                      text: 'Username already exists',
+                      text: 'Account already exists',
                       happy: false,
                     });
                   } else {
@@ -202,13 +205,6 @@ export function KinClientApp({
                     });
                   }
                 },
-              },
-            ]}
-            inputs={[
-              {
-                name: 'Username',
-                value: newUserName,
-                onChange: setNewUserName,
               },
             ]}
           />{' '}
@@ -412,18 +408,40 @@ export function KinClientApp({
           />
           <br />
           <hr />
-          <h3 className="Kin-section">{`Additional actions not using Kin SDK`}</h3>
+          <h3 className="Kin-section">{`Get Transaction Details and History`}</h3>
           <KinAction
             title="View Transaction"
-            subTitle="See the details of your transactions on the Solana Explorer"
+            links={kinLinks.clientCodeSamples.methods.getTransactionDetails}
+            subTitle="See the details of your transactions"
             disabled={!transactions.length && !inputTransaction}
             actions={[
               {
-                name: 'View',
+                name: 'Get',
+                onClick: () => {
+                  setLoading(true);
+                  setTransactionData('');
+                  const signature =
+                    inputTransaction || selectedTransaction || transactions[0];
+                  handleGetTransactionData({
+                    kineticClient,
+                    signature,
+                    onSuccess: (data) => {
+                      setLoading(false);
+                      setTransactionData(data);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({ text: 'Send Failed!', happy: false });
+                    },
+                  });
+                },
+              },
+              {
+                name: 'View on Solana Explorer',
                 onClick: () => {
                   const transaction =
                     inputTransaction || selectedTransaction || transactions[0];
-                  openExplorer({ transaction, kinNetwork });
+                  openExplorer({ transaction, solanaNetwork: kinNetwork });
                 },
               },
             ]}
@@ -447,7 +465,60 @@ export function KinClientApp({
                   !transactions.length || !!inputTransaction.length,
               },
             ]}
+            displayOutput={transactionData ? transactionData : null}
           />
+          <KinAction
+            title="Get Account History"
+            subTitle="See the list of transactions associated with this Account"
+            links={kinLinks.clientCodeSamples.methods.getAccountHistory}
+            disabled={!userAccounts.length}
+            actions={[
+              {
+                name: 'Get History',
+                onClick: () => {
+                  setLoading(true);
+                  handleGetHistory({
+                    kineticClient,
+                    user: balanceUser || userAccounts[0],
+                    kinNetwork: kineticClientNetwork,
+                    onSuccess: (history) => {
+                      setLoading(false);
+                      setHistoryData(history);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({
+                        text: "Couldn't get History!",
+                        happy: false,
+                      });
+                    },
+                  });
+                },
+              },
+              {
+                name: 'View on Solana Explorer',
+                onClick: () => {
+                  const address = historyUser;
+                  openExplorer({ address, solanaNetwork: kinNetwork });
+                },
+              },
+            ]}
+            inputs={[
+              {
+                name: 'User',
+                value: historyUser,
+                options: userAccounts,
+                onChange: (user) => {
+                  setHistoryUser(user);
+                  setHistoryData('');
+                },
+              },
+            ]}
+            displayOutput={historyData ? historyData : null}
+          />
+          <br />
+          <hr />
+          <h3 className="Kin-section">{`Additional actions not using Kin SDK`}</h3>
           <KinAction
             title="View User Keys"
             subTitle="Users will need a safe way to access their secret so they don't lose access to their Kin"
@@ -456,11 +527,20 @@ export function KinClientApp({
               {
                 name: 'View',
                 onClick: () => {
-                  const wallet = getKeypair(
+                  const keypair = getKeypair(
                     seeWallet || userAccounts[0],
                     kineticClientNetwork
                   );
-                  setSeeWalletDetails(wallet);
+                  console.log('🚀 ~ keypair', keypair);
+
+                  if (keypair?.publicKey) {
+                    setSeeWalletDetails(
+                      JSON.stringify({
+                        publicKey: keypair?.publicKey,
+                        mnemonic: keypair.mnemonic,
+                      })
+                    );
+                  }
                 },
               },
             ]}
@@ -471,7 +551,7 @@ export function KinClientApp({
                 options: [...userAccounts],
                 onChange: (user) => {
                   setSeeWallet(user);
-                  setSeeWalletDetails(null);
+                  setSeeWalletDetails('');
                 },
                 disabledInput: !userAccounts.length,
               },

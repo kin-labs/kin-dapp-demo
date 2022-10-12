@@ -36,13 +36,13 @@ export function getKeypair(user: string, kinNetwork: string): Keypair | null {
   return userKeypair || null;
 }
 
-export function getPrivateKey(
-  user: string,
-  kinNetwork: string
-): Keypair | null {
-  const keypair = getKeypair(user, kinNetwork);
-  return keypair || null;
-}
+// export function getPrivateKey(
+//   user: string,
+//   kinNetwork: string
+// ): Keypair | null {
+//   const keypair = getKeypair(user, kinNetwork);
+//   return keypair || null;
+// }
 
 export function getPublicKey(user: string, kinNetwork: string): string {
   const keypair = getKeypair(user, kinNetwork);

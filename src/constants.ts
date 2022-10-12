@@ -218,36 +218,49 @@ export const kinLinks = {
         {
           name: 'See the Code',
           link:
-            'https://github.com/kin-labs/kin-dapp-demo/blob/master/src/helpers/webSDK/handleSetUpKinClient.ts',
+            'https://developer.kin.org/docs/developers/typescript#instantiate-the-kinetic-client',
         },
       ],
       createAccount: [
         {
           name: 'See the Code',
-          sdk: 'https://github.com/kinecosystem/kin-node',
           link:
-            'https://github.com/kin-labs/kin-dapp-demo/blob/master/src/helpers/webSDK/handleCreateAccount.ts',
+            'https://developer.kin.org/docs/developers/typescript#create-account',
         },
       ],
       getBalance: [
         {
           name: 'See the Code',
           link:
-            'https://github.com/kin-labs/kin-dapp-demo/blob/master/src/helpers/webSDK/handleGetBalance.ts',
+            'https://developer.kin.org/docs/developers/typescript#check-balance',
         },
       ],
       requestAirdrop: [
         {
           name: 'See the Code',
           link:
-            'https://github.com/kin-labs/kin-dapp-demo/blob/master/src/helpers/webSDK/handleRequestAirdrop.ts',
+            'https://developer.kin.org/docs/developers/typescript#airdrop-funds-devnet',
         },
       ],
       submitPayment: [
         {
           name: 'See the Code',
           link:
-            'https://github.com/kin-labs/kin-dapp-demo/blob/master/src/helpers/webSDK/handleSendKin.ts',
+            'https://developer.kin.org/docs/developers/typescript#transfer-kin',
+        },
+      ],
+      getTransactionDetails: [
+        {
+          name: 'See the Code',
+          link:
+            'https://developer.kin.org/docs/developers/typescript#get-transaction-details',
+        },
+      ],
+      getAccountHistory: [
+        {
+          name: 'See the Code',
+          link:
+            'https://developer.kin.org/docs/developers/typescript#get-account-history',
         },
       ],
     },

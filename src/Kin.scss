@@ -14,11 +14,11 @@
     padding: 20px;
     transition: all 0.4s 0.5s;
     color: $white_dark;
-    background-color: $kin_dark;
+    background-color: $background_dark;
 
     &.up,
     &.hasAppIndex {
-      background-color: $kin;
+      background-color: $kin_dark;
     }
   }
 
@@ -32,14 +32,15 @@
 
   .Kin-action-container {
     margin-bottom: 10px;
-    background-color: $background;
     border-radius: 5px;
     border: 0.5px solid $white_dark;
+    background-color: $background_dark;
   }
 
   .Kin-action-trigger {
     cursor: pointer;
     padding: 10px;
+    border-bottom: 1px solid $white_dark;
   }
 
   .Kin-action-title {
@@ -55,7 +56,6 @@
     margin: auto;
     width: calc(100% - 40px);
     padding: 20px;
-    background-color: $background_dark;
 
     .links {
       margin: 0 0 20px;
@@ -111,10 +111,10 @@
     color: $white;
     padding: 10px;
     border-radius: 5px;
-    border: none;
     cursor: pointer;
     transition: all 0.2s;
     margin-right: 5px;
+    border: 1px solid $white_dark;
 
     &:hover {
       background-color: $kin;

@@ -212,7 +212,7 @@ export function KinAction({
         ) : null}
 
         {displayOutput && typeof displayOutput === 'string' ? (
-          <pre className="Kin-action-display">displayOutput</pre>
+          <pre className="Kin-action-display">{displayOutput}</pre>
         ) : null}
       </div>
     </Collapsible>
