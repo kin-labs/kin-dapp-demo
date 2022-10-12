@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { KinClient } from '@kin-sdk/client';
-
+import { KineticSdk } from '@kin-kinetic/sdk';
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from 'react-loader-spinner';
 
@@ -40,8 +39,8 @@ function App() {
   ];
   const [selectedAppType, setSelectedAppType] = useState(appTypes[1]);
 
-  const [kinClient, setKinClient] = useState<KinClient | null>(null);
-  const [kinClientNetwork, setKinClientNetwork] = useState('Test');
+  const [kineticClient, setKinClient] = useState<KineticSdk | null>(null);
+  const [kineticClientNetwork, setKinClientNetwork] = useState('Test');
   const [solanaNetwork, setSolanaNetwork] = useState<SolanaNetwork>('Mainnet');
 
   return (
@@ -95,9 +94,9 @@ function App() {
                 <KinClientApp
                   makeToast={makeToast}
                   setLoading={setLoading}
-                  kinClient={kinClient}
+                  kineticClient={kineticClient}
                   setKinClient={setKinClient}
-                  kinClientNetwork={kinClientNetwork}
+                  kineticClientNetwork={kineticClientNetwork}
                   setKinClientNetwork={setKinClientNetwork}
                 />
               );

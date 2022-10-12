@@ -1,9 +1,11 @@
-import { KinClient, createWallet } from '@kin-sdk/client';
+import { KineticSdk } from '@kin-kinetic/sdk';
+import { Keypair } from '@kin-kinetic/keypair';
+import { Commitment } from '@kin-kinetic/solana';
 
-import { saveAccount } from '..';
+import { saveKeypair } from '..';
 
 interface HandleCreateAccount {
-  kinClient: KinClient;
+  kineticClient: KineticSdk;
   name: string;
   kinNetwork: string;
 
@@ -11,8 +13,6 @@ interface HandleCreateAccount {
   onFailure: () => void;
 }
 
-// createWallet needs global.buffer
-// ReferenceError: Buffer is not defined
 (window as any).global = window;
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -21,37 +21,22 @@ export async function handleCreateAccount({
   onFailure,
   name,
   kinNetwork,
-  kinClient,
+  kineticClient,
 }: HandleCreateAccount) {
   console.log('🚀 ~ handleCreateAccount', name);
   try {
-    const wallet = createWallet('create', { name });
+    const mnemonic = Keypair.generateMnemonic();
+    console.log('🚀 ~ mnemonic', mnemonic);
+    const keypair = Keypair.fromMnemonic(mnemonic);
+    console.log('🚀 ~ keypair', keypair);
 
-    if (wallet.secret) {
-      const [account, createAccountError] = await kinClient.createAccount(
-        wallet.secret
-      );
-
-      if (createAccountError) throw new Error(createAccountError);
-
-      if (account) {
-        const [balances, error] = await kinClient.getBalances(account);
-        if (error) throw new Error("Couldn't find account");
-
-        const tokenAccounts = balances.map((balance) => balance.account || '');
-
-        if (tokenAccounts.length) {
-          saveAccount(
-            {
-              ...wallet,
-              tokenAccounts,
-            },
-            kinNetwork
-          );
-          onSuccess();
-        }
-      }
-    }
+    const account = await kineticClient.createAccount({
+      owner: keypair,
+      commitment: Commitment.Finalized,
+    });
+    console.log('🚀 ~ account', account);
+    saveKeypair(keypair, kinNetwork);
+    onSuccess();
 
     // confirm account creation
   } catch (error) {

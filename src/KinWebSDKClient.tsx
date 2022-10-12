@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { KinClient, Wallet } from '@kin-sdk/client';
+import { KineticSdk } from '@kin-kinetic/sdk';
+import { Keypair } from '@kin-kinetic/keypair';
 
 import { KinAction } from './KinAction';
 import { Links } from './Links';
@@ -9,8 +10,8 @@ import { kinLinks } from './constants';
 import {
   MakeToast,
   openExplorer,
-  getUserAccounts,
-  getUserAccount,
+  getKeypairs,
+  getKeypair,
   getTransactions,
   getPublicKey,
 } from './helpers';
@@ -26,29 +27,29 @@ import './Kin.scss';
 interface KinClientAppProps {
   makeToast: (arg: MakeToast) => void;
   setLoading: (arg: boolean) => void;
-  kinClient: KinClient | null;
-  setKinClient: (client: KinClient) => void;
-  kinClientNetwork: string;
+  kineticClient: KineticSdk | null;
+  setKinClient: (client: KineticSdk) => void;
+  kineticClientNetwork: string;
   setKinClientNetwork: (network: string) => void;
 }
 export function KinClientApp({
   makeToast,
   setLoading,
-  kinClient,
+  kineticClient,
   setKinClient,
-  kinClientNetwork,
+  kineticClientNetwork,
   setKinClientNetwork,
 }: KinClientAppProps) {
   const [userAccounts, setUserAccounts] = useState<string[]>(
-    getUserAccounts(kinClientNetwork)
+    getKeypairs(kineticClientNetwork)
   );
   const [transactions, setTransactions] = useState<string[]>([]);
   const [shouldUpdate, setShouldUpdate] = useState(true);
   useEffect(() => {
     if (shouldUpdate) {
       // Get data from secure local storage
-      setUserAccounts(getUserAccounts(kinClientNetwork));
-      setTransactions(getTransactions(kinClientNetwork));
+      setUserAccounts(getKeypairs(kineticClientNetwork));
+      setTransactions(getTransactions(kineticClientNetwork));
 
       setShouldUpdate(false);
     }
@@ -72,7 +73,9 @@ export function KinClientApp({
 
   const [seeWallet, setSeeWallet] = useState('');
 
-  const [seeWalletDetails, setSeeWalletDetails] = useState<Wallet | null>(null);
+  const [seeWalletDetails, setSeeWalletDetails] = useState<Keypair | null>(
+    null
+  );
 
   return (
     <div className="Kin">
@@ -96,12 +99,14 @@ export function KinClientApp({
         <Links links={kinLinks.KRE} />
       </div>
 
-      <div className={`Kin-status ${kinClient ? 'hasAppIndex' : 'noAppIndex'}`}>
-        {kinClient ? (
+      <div
+        className={`Kin-status ${kineticClient ? 'hasAppIndex' : 'noAppIndex'}`}
+      >
+        {kineticClient ? (
           <span>
             {`Client Initialised`}
             <br />
-            {`App Index ${process.env.REACT_APP_APP_INDEX} on ${kinClientNetwork}`}
+            {`App Index ${process.env.REACT_APP_APP_INDEX} on ${kineticClientNetwork}`}
           </span>
         ) : (
           <span>
@@ -154,7 +159,7 @@ export function KinClientApp({
         ]}
       />
 
-      {kinClient ? (
+      {kineticClient ? (
         <>
           <br />
           <hr />
@@ -175,9 +180,9 @@ export function KinClientApp({
                   } else {
                     setLoading(true);
                     handleCreateAccount({
-                      kinClient,
+                      kineticClient,
                       name: newUserName,
-                      kinNetwork: kinClientNetwork,
+                      kinNetwork: kineticClientNetwork,
                       onSuccess: () => {
                         setLoading(false);
                         makeToast({
@@ -217,9 +222,9 @@ export function KinClientApp({
                 onClick: () => {
                   setLoading(true);
                   handleGetBalance({
-                    kinClient,
+                    kineticClient,
                     user: balanceUser || userAccounts[0],
-                    kinNetwork: kinClientNetwork,
+                    kinNetwork: kineticClientNetwork,
                     onSuccess: (balance) => {
                       setLoading(false);
                       setDisplayBalance(balance);
@@ -239,7 +244,7 @@ export function KinClientApp({
                 onClick: () => {
                   const address = getPublicKey(
                     balanceUser || userAccounts[0],
-                    kinClientNetwork
+                    kineticClientNetwork
                   );
                   if (!address) {
                     makeToast({
@@ -296,8 +301,8 @@ export function KinClientApp({
                     handleRequestAirdrop({
                       to: airdropUser || userAccounts[0],
                       amount: airdropAmount,
-                      kinClient,
-                      kinNetwork: kinClientNetwork,
+                      kineticClient,
+                      kinNetwork: kineticClientNetwork,
                       onSuccess: () => {
                         setLoading(false);
                         makeToast({ text: 'Airdrop Successful!', happy: true });
@@ -344,8 +349,8 @@ export function KinClientApp({
                   setLoading(true);
 
                   const sendKinOptions: HandleSendKin = {
-                    kinClient,
-                    kinNetwork: kinClientNetwork,
+                    kineticClient,
+                    kinNetwork: kineticClientNetwork,
                     from: payFromUserP2P || userAccounts[0],
                     to: payToUserP2P || userAccounts[1],
                     amount: payAmountP2P,
@@ -451,9 +456,9 @@ export function KinClientApp({
               {
                 name: 'View',
                 onClick: () => {
-                  const wallet = getUserAccount(
+                  const wallet = getKeypair(
                     seeWallet || userAccounts[0],
-                    kinClientNetwork
+                    kineticClientNetwork
                   );
                   setSeeWalletDetails(wallet);
                 },

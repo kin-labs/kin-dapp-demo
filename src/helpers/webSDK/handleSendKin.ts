@@ -1,41 +1,10 @@
-import { KinClient, TransactionType } from '@kin-sdk/client';
-
+import { KineticSdk, MakeTransferOptions } from '@kin-kinetic/sdk';
+import { TransactionType } from '@kin-tools/kin-memo';
+import { Commitment } from '@kin-kinetic/solana';
 import { saveTransaction, getPublicKey, getPrivateKey } from '..';
 
-interface GetTokenAccountWithSufficientBalance {
-  user: string;
-  amount: string;
-  kinClient: KinClient;
-  kinNetwork: string;
-}
-
-async function getTokenAccountWithSufficientBalance({
-  user,
-  amount,
-  kinClient,
-  kinNetwork,
-}: GetTokenAccountWithSufficientBalance) {
-  const publicKey = getPublicKey(user, kinNetwork);
-
-  const [balances, error] = await kinClient.getBalances(publicKey);
-
-  if (balances) {
-    const tokenAccountWithBalance = balances.find(
-      (balance) => Number(balance.balance) > Number(amount)
-    );
-
-    if (!tokenAccountWithBalance) {
-      throw new Error('No token account with enough balance.');
-    } else {
-      return tokenAccountWithBalance.account;
-    }
-  } else {
-    throw new Error(error);
-  }
-}
-
 export interface HandleSendKin {
-  kinClient: KinClient;
+  kineticClient: KineticSdk;
   from: string;
   to: string;
   amount: string;
@@ -52,18 +21,12 @@ export async function handleSendKin({
   to,
   amount,
   type,
-  kinClient,
+  kineticClient,
   kinNetwork,
 }: HandleSendKin) {
   console.log('🚀 ~ handleSendKin', type, from, to, amount);
   try {
-    const secret = getPrivateKey(from, kinNetwork);
-    const tokenAccount = await getTokenAccountWithSufficientBalance({
-      user: from,
-      amount,
-      kinClient,
-      kinNetwork,
-    });
+    const owner = getPrivateKey(from, kinNetwork);
     const destination = getPublicKey(to, kinNetwork);
 
     let transactionType = TransactionType.None;
@@ -71,27 +34,23 @@ export async function handleSendKin({
     if (type === 'Spend') transactionType = TransactionType.Spend;
     if (type === 'P2P') transactionType = TransactionType.P2P;
 
-    if (secret && tokenAccount && destination) {
-      const options = {
-        secret,
-        tokenAccount,
-        destination,
+    if (owner && destination) {
+      const transactionOptions: MakeTransferOptions = {
         amount,
+        destination,
+        owner,
         type: transactionType,
+        commitment: Commitment.Finalized,
       };
-      console.log('🚀 ~ options', options);
+      console.log('🚀 ~ transactionOptions', transactionOptions);
 
-      const [transaction, error] = await kinClient.submitPayment(options);
-      console.log('🚀 ~ transaction', transaction);
-      console.log('🚀 ~ error', error);
-      if (transaction) {
-        saveTransaction(transaction, kinNetwork);
+      const transfer = await kineticClient.makeTransfer(transactionOptions);
+      console.log('🚀 ~ transfer', transfer);
+
+      if (transfer?.signature) {
+        saveTransaction(transfer.signature, kinNetwork);
         onSuccess();
       }
-
-      if (error) throw new Error(error);
-    } else {
-      throw new Error("Couldn't make transaction");
     }
   } catch (error) {
     console.log('🚀 ~ error', error);
