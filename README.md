@@ -13,7 +13,7 @@ This app is designed to work with the following Kin Server Demos:
 
 ## Via the [Kin TypeScript SDK](https://github.com/kin-sdk/kin-sdk-web) in the browser
 
-## Via Solana Directly / SDK-less
+## Via Solana Directly / [SDK-less](https://developer.kin.org/docs/developers/sdk-less)
 
 ## Prep
 
