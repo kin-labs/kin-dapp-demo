@@ -81,7 +81,7 @@ export function KinClientApp({
 
         <br />
         <br />
-        {`Create and send transactions via the Kin Web SDK`}
+        {`Create and send transactions via the Kin TypeScript SDK directly from the browser`}
         <br />
         <Links links={kinLinks.webSDK} />
         <br />

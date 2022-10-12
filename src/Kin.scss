@@ -13,8 +13,8 @@
     width: calc(100% - 40px);
     padding: 20px;
     transition: all 0.4s 0.5s;
-    color: white;
-    background-color: $kin_light;
+    color: $white_dark;
+    background-color: $kin_dark;
 
     &.up,
     &.hasAppIndex {
@@ -23,10 +23,10 @@
   }
 
   .Kin-link {
-    color: white;
+    color: $white_dark;
 
     &:visited {
-      color: white;
+      color: $white_dark;
     }
   }
 
@@ -133,7 +133,7 @@
   }
 
   .Kin-explanation {
-    color: $kin_dark;
+    color: $white_dark;
     font-weight: lighter;
     padding: 20px;
     border-radius: 5px;

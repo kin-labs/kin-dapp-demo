@@ -3,7 +3,8 @@
 .App {
   font-family: 'Open Sans', sans-serif;
   text-align: center;
-  color: $kin_dark;
+  color: $white_dark;
+  background-color: $black;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -64,13 +65,13 @@
 }
 
 .App-link {
-  color: $kin_dark;
+  color: $white_dark;
 }
 
 .App-body {
   padding: 30px;
   flex-grow: 1;
-  background-color: $white;
+  background-color: $black;
 
   .App-body-container {
     margin: auto;

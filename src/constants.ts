@@ -40,7 +40,7 @@ export const kinLinks = {
   webSDK: [
     {
       name: 'TypeScript SDK Tutorial',
-      link: 'https://developer.kin.org/tutorials/web/',
+      link: 'https://developer.kin.org/docs/developers/typescript',
     },
   ],
   SDKless: [
