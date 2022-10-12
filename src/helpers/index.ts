@@ -1,5 +1,5 @@
 import SecureLS from 'secure-ls';
-import { Wallet } from '@kin-sdk/client';
+import { Keypair } from '@kin-kinetic/keypair';
 
 export interface MakeToast {
   text: string;
@@ -11,44 +11,42 @@ export const secureLocalStorage = new SecureLS();
 console.log('🚀 ~ secureLocalStorage', secureLocalStorage);
 
 // We are just saving into localStorage. Make sure your app uses a secure solution.
-interface Account extends Wallet {
-  tokenAccounts: string[];
-}
-export function saveAccount(account: Account, kinNetwork: string) {
-  const accounts = secureLocalStorage.get(`accounts${kinNetwork}`) || [];
-  if (account.publicKey)
-    secureLocalStorage.set(`accounts${kinNetwork}`, [...accounts, account]);
+export function saveKeypair(keypair: Keypair, kinNetwork: string) {
+  const keypairs = secureLocalStorage.get(`keypairs${kinNetwork}`) || [];
+
+  if (keypair.publicKey)
+    secureLocalStorage.set(`keypairs${kinNetwork}`, [...keypairs, keypair]);
 }
 
-export function getUserAccounts(kinNetwork: string): string[] {
+export function getKeypairs(kinNetwork: string): string[] {
   try {
-    const accounts = secureLocalStorage.get(`accounts${kinNetwork}`) || [];
-    return accounts.map((account: Account) => account.name);
+    const keypairs = secureLocalStorage.get(`keypairs${kinNetwork}`) || [];
+    return keypairs.map((keypair: Keypair) => keypair.publicKey);
   } catch (error) {
     return [];
   }
 }
 
-export function getUserAccount(
-  user: string,
-  kinNetwork: string
-): Account | null {
-  const accounts = secureLocalStorage.get(`accounts${kinNetwork}`) || [];
-  const userAccount = accounts.find(
-    (account: Account) => account.name === user
+export function getKeypair(user: string, kinNetwork: string): Keypair | null {
+  const keypairs = secureLocalStorage.get(`keypairs${kinNetwork}`) || [];
+  const userKeypair = keypairs.find(
+    (keypair: Keypair) => keypair.publicKey === user
   );
 
-  return userAccount || null;
+  return userKeypair || null;
 }
 
-export function getPrivateKey(user: string, kinNetwork: string): string {
-  const account = getUserAccount(user, kinNetwork);
-  return account?.secret || '';
-}
+// export function getPrivateKey(
+//   user: string,
+//   kinNetwork: string
+// ): Keypair | null {
+//   const keypair = getKeypair(user, kinNetwork);
+//   return keypair || null;
+// }
 
 export function getPublicKey(user: string, kinNetwork: string): string {
-  const account = getUserAccount(user, kinNetwork);
-  return account?.publicKey || '';
+  const keypair = getKeypair(user, kinNetwork);
+  return keypair?.publicKey || '';
 }
 
 interface Transaction {
@@ -88,6 +86,10 @@ export function openExplorer({
   kinNetwork,
   solanaNetwork,
 }: OpenExplorer) {
+  console.log('🚀 ~ openExplorer');
+  console.log('🚀 ~ transaction', transaction);
+  console.log('🚀 ~ kinNetwork', kinNetwork);
+  console.log('🚀 ~ solanaNetwork', solanaNetwork);
   if (transaction) {
     window.open(
       `https://explorer.solana.com/tx/${transaction}${(() => {
@@ -96,6 +98,9 @@ export function openExplorer({
         }
         if (solanaNetwork && solanaNetwork !== 'Mainnet') {
           return `?cluster=${solanaNetwork.toLowerCase()}`;
+        }
+        if (kinNetwork && kinNetwork === 'Devnet') {
+          return `?cluster=${kinNetwork.toLowerCase()}`;
         }
         return '';
       })()}`

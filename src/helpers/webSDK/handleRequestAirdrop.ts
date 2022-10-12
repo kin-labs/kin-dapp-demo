@@ -1,9 +1,8 @@
-import { KinClient } from '@kin-sdk/client';
-
-import { getPublicKey } from '..';
+import { KineticSdk } from '@kin-kinetic/sdk';
+import { Commitment } from '@kin-kinetic/solana';
 
 interface HandleRequestAirdrop {
-  kinClient: KinClient;
+  kineticClient: KineticSdk;
   to: string;
   amount: string;
   kinNetwork: string;
@@ -16,18 +15,18 @@ export async function handleRequestAirdrop({
   onFailure,
   to,
   amount,
-  kinClient,
-  kinNetwork,
+  kineticClient,
 }: HandleRequestAirdrop) {
   console.log('🚀 ~ handleRequestAirdrop', to, amount);
   try {
-    const publicKey = getPublicKey(to, kinNetwork);
+    const airdrop = await kineticClient.requestAirdrop({
+      account: to,
+      amount: amount,
+      commitment: Commitment.Finalized,
+    });
+    console.log('🚀 ~ airdrop', airdrop);
 
-    const [success, error] = await kinClient.requestAirdrop(publicKey, amount);
-
-    if (error) throw new Error(error);
-
-    if (success) onSuccess();
+    onSuccess();
   } catch (error) {
     console.log('🚀 ~ error', error);
     onFailure();

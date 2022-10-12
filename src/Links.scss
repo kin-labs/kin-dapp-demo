@@ -2,21 +2,20 @@
 
 .Links {
   .link {
-    color: $white;
+    color: $white_dark;
     cursor: pointer;
     text-decoration: underline;
-    color: inherit;
 
     &:visited {
-      color: $white;
+      color: $white_dark;
     }
   }
 
   .link.darkMode {
-    color: $kin_dark;
+    color: $white_dark;
 
     &:visited {
-      color: $kin;
+      color: $white_dark;
     }
   }
 }

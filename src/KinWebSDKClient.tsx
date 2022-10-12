@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { KinClient, Wallet } from '@kin-sdk/client';
+import { KineticSdk } from '@kin-kinetic/sdk';
 
 import { KinAction } from './KinAction';
 import { Links } from './Links';
@@ -9,8 +9,8 @@ import { kinLinks } from './constants';
 import {
   MakeToast,
   openExplorer,
-  getUserAccounts,
-  getUserAccount,
+  getKeypairs,
+  getKeypair,
   getTransactions,
   getPublicKey,
 } from './helpers';
@@ -22,38 +22,40 @@ import { handleRequestAirdrop } from './helpers/webSDK/handleRequestAirdrop';
 import { handleSendKin, HandleSendKin } from './helpers/webSDK/handleSendKin';
 
 import './Kin.scss';
+import { handleGetTransactionData } from './helpers/webSDK/handleGetTransactionData';
+import { handleGetHistory } from './helpers/webSDK/handleGetHistory';
 
 interface KinClientAppProps {
   makeToast: (arg: MakeToast) => void;
   setLoading: (arg: boolean) => void;
-  kinClient: KinClient | null;
-  setKinClient: (client: KinClient) => void;
-  kinClientNetwork: string;
+  kineticClient: KineticSdk | null;
+  setKinClient: (client: KineticSdk) => void;
+  kineticClientNetwork: string;
   setKinClientNetwork: (network: string) => void;
 }
 export function KinClientApp({
   makeToast,
   setLoading,
-  kinClient,
+  kineticClient,
   setKinClient,
-  kinClientNetwork,
+  kineticClientNetwork,
   setKinClientNetwork,
 }: KinClientAppProps) {
   const [userAccounts, setUserAccounts] = useState<string[]>(
-    getUserAccounts(kinClientNetwork)
+    getKeypairs(kineticClientNetwork)
   );
   const [transactions, setTransactions] = useState<string[]>([]);
   const [shouldUpdate, setShouldUpdate] = useState(true);
   useEffect(() => {
     if (shouldUpdate) {
       // Get data from secure local storage
-      setUserAccounts(getUserAccounts(kinClientNetwork));
-      setTransactions(getTransactions(kinClientNetwork));
+      setUserAccounts(getKeypairs(kineticClientNetwork));
+      setTransactions(getTransactions(kineticClientNetwork));
 
       setShouldUpdate(false);
     }
   }, [shouldUpdate]);
-  const [kinNetwork, setKinNetwork] = useState('Test');
+  const [kinNetwork, setKinNetwork] = useState('Devnet');
 
   const [newUserName, setNewUserName] = useState('');
 
@@ -69,10 +71,14 @@ export function KinClientApp({
 
   const [inputTransaction, setInputTransaction] = useState('');
   const [selectedTransaction, setSelectedTransaction] = useState('');
+  const [transactionData, setTransactionData] = useState('');
+
+  const [historyUser, setHistoryUser] = useState('');
+  const [historyData, setHistoryData] = useState('');
 
   const [seeWallet, setSeeWallet] = useState('');
 
-  const [seeWalletDetails, setSeeWalletDetails] = useState<Wallet | null>(null);
+  const [seeWalletDetails, setSeeWalletDetails] = useState('');
 
   return (
     <div className="Kin">
@@ -81,7 +87,7 @@ export function KinClientApp({
 
         <br />
         <br />
-        {`Create and send transactions via the Kin Web SDK`}
+        {`Create and send transactions via the Kin TypeScript SDK directly from the browser`}
         <br />
         <Links links={kinLinks.webSDK} />
         <br />
@@ -91,22 +97,19 @@ export function KinClientApp({
         <br />
         <br />
 
-        {`Supports `}
-        <Links links={kinLinks.agora} />
-        {` - account creation and transaction fees can be subsidized to make it simple for a new user to get on board and transact with Kin`}
-        <br />
-        <br />
         {`Transactions will be eligible for reward via the Kin Rewards Engine`}
         <br />
         <Links links={kinLinks.KRE} />
       </div>
 
-      <div className={`Kin-status ${kinClient ? 'hasAppIndex' : 'noAppIndex'}`}>
-        {kinClient ? (
+      <div
+        className={`Kin-status ${kineticClient ? 'hasAppIndex' : 'noAppIndex'}`}
+      >
+        {kineticClient ? (
           <span>
             {`Client Initialised`}
             <br />
-            {`App Index ${process.env.REACT_APP_APP_INDEX} on ${kinClientNetwork}`}
+            {`App Index ${process.env.REACT_APP_APP_INDEX} on ${kineticClientNetwork}`}
           </span>
         ) : (
           <span>
@@ -153,16 +156,16 @@ export function KinClientApp({
           {
             name: 'Network',
             value: kinNetwork,
-            options: ['Test', 'Prod'],
+            options: ['Devnet', 'Mainnet'],
             onChange: setKinNetwork,
           },
         ]}
       />
 
-      {kinClient ? (
+      {kineticClient ? (
         <>
           <br />
-          <hr />
+          <br />
           <h3 className="Kin-section">{`Manage Kin Accounts`}</h3>
           <KinAction
             title="Create a Kin Account for a User"
@@ -174,15 +177,15 @@ export function KinClientApp({
                   const exists = userAccounts.includes(newUserName);
                   if (exists) {
                     makeToast({
-                      text: 'Username already exists',
+                      text: 'Account already exists',
                       happy: false,
                     });
                   } else {
                     setLoading(true);
                     handleCreateAccount({
-                      kinClient,
+                      kineticClient,
                       name: newUserName,
-                      kinNetwork: kinClientNetwork,
+                      kinNetwork: kineticClientNetwork,
                       onSuccess: () => {
                         setLoading(false);
                         makeToast({
@@ -204,13 +207,6 @@ export function KinClientApp({
                 },
               },
             ]}
-            inputs={[
-              {
-                name: 'Username',
-                value: newUserName,
-                onChange: setNewUserName,
-              },
-            ]}
           />{' '}
           <KinAction
             title="Get an Account Balance"
@@ -222,9 +218,9 @@ export function KinClientApp({
                 onClick: () => {
                   setLoading(true);
                   handleGetBalance({
-                    kinClient,
+                    kineticClient,
                     user: balanceUser || userAccounts[0],
-                    kinNetwork: kinClientNetwork,
+                    kinNetwork: kineticClientNetwork,
                     onSuccess: (balance) => {
                       setLoading(false);
                       setDisplayBalance(balance);
@@ -244,7 +240,7 @@ export function KinClientApp({
                 onClick: () => {
                   const address = getPublicKey(
                     balanceUser || userAccounts[0],
-                    kinClientNetwork
+                    kineticClientNetwork
                   );
                   if (!address) {
                     makeToast({
@@ -278,7 +274,7 @@ export function KinClientApp({
             }
           />
           <br />
-          <hr />
+          <br />
           <h3 className="Kin-section">{`Make payments and earn Kin via the KRE`}</h3>
           {(() => {
             if (!userAccounts || userAccounts.length < 2) {
@@ -301,8 +297,8 @@ export function KinClientApp({
                     handleRequestAirdrop({
                       to: airdropUser || userAccounts[0],
                       amount: airdropAmount,
-                      kinClient,
-                      kinNetwork: kinClientNetwork,
+                      kineticClient,
+                      kinNetwork: kineticClientNetwork,
                       onSuccess: () => {
                         setLoading(false);
                         makeToast({ text: 'Airdrop Successful!', happy: true });
@@ -349,8 +345,8 @@ export function KinClientApp({
                   setLoading(true);
 
                   const sendKinOptions: HandleSendKin = {
-                    kinClient,
-                    kinNetwork: kinClientNetwork,
+                    kineticClient,
+                    kinNetwork: kineticClientNetwork,
                     from: payFromUserP2P || userAccounts[0],
                     to: payToUserP2P || userAccounts[1],
                     amount: payAmountP2P,
@@ -411,19 +407,41 @@ export function KinClientApp({
             disabled={!payAmountP2P || !userAccounts[1]}
           />
           <br />
-          <hr />
-          <h3 className="Kin-section">{`Additional actions not using Kin SDK`}</h3>
+          <br />
+          <h3 className="Kin-section">{`Get Transaction Details and History`}</h3>
           <KinAction
             title="View Transaction"
-            subTitle="See the details of your transactions on the Solana Explorer"
+            links={kinLinks.clientCodeSamples.methods.getTransactionDetails}
+            subTitle="See the details of your transactions"
             disabled={!transactions.length && !inputTransaction}
             actions={[
               {
-                name: 'View',
+                name: 'Get',
+                onClick: () => {
+                  setLoading(true);
+                  setTransactionData('');
+                  const signature =
+                    inputTransaction || selectedTransaction || transactions[0];
+                  handleGetTransactionData({
+                    kineticClient,
+                    signature,
+                    onSuccess: (data) => {
+                      setLoading(false);
+                      setTransactionData(data);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({ text: 'Send Failed!', happy: false });
+                    },
+                  });
+                },
+              },
+              {
+                name: 'View on Solana Explorer',
                 onClick: () => {
                   const transaction =
                     inputTransaction || selectedTransaction || transactions[0];
-                  openExplorer({ transaction, kinNetwork });
+                  openExplorer({ transaction, solanaNetwork: kinNetwork });
                 },
               },
             ]}
@@ -447,7 +465,60 @@ export function KinClientApp({
                   !transactions.length || !!inputTransaction.length,
               },
             ]}
+            displayOutput={transactionData ? transactionData : null}
           />
+          <KinAction
+            title="Get Account History"
+            subTitle="See the list of transactions associated with this Account"
+            links={kinLinks.clientCodeSamples.methods.getAccountHistory}
+            disabled={!userAccounts.length}
+            actions={[
+              {
+                name: 'Get History',
+                onClick: () => {
+                  setLoading(true);
+                  handleGetHistory({
+                    kineticClient,
+                    user: balanceUser || userAccounts[0],
+                    kinNetwork: kineticClientNetwork,
+                    onSuccess: (history) => {
+                      setLoading(false);
+                      setHistoryData(history);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({
+                        text: "Couldn't get History!",
+                        happy: false,
+                      });
+                    },
+                  });
+                },
+              },
+              {
+                name: 'View on Solana Explorer',
+                onClick: () => {
+                  const address = historyUser;
+                  openExplorer({ address, solanaNetwork: kinNetwork });
+                },
+              },
+            ]}
+            inputs={[
+              {
+                name: 'User',
+                value: historyUser,
+                options: userAccounts,
+                onChange: (user) => {
+                  setHistoryUser(user);
+                  setHistoryData('');
+                },
+              },
+            ]}
+            displayOutput={historyData ? historyData : null}
+          />
+          <br />
+          <br />
+          <h3 className="Kin-section">{`Additional actions not using Kin SDK`}</h3>
           <KinAction
             title="View User Keys"
             subTitle="Users will need a safe way to access their secret so they don't lose access to their Kin"
@@ -456,11 +527,20 @@ export function KinClientApp({
               {
                 name: 'View',
                 onClick: () => {
-                  const wallet = getUserAccount(
+                  const keypair = getKeypair(
                     seeWallet || userAccounts[0],
-                    kinClientNetwork
+                    kineticClientNetwork
                   );
-                  setSeeWalletDetails(wallet);
+                  console.log('🚀 ~ keypair', keypair);
+
+                  if (keypair?.publicKey) {
+                    setSeeWalletDetails(
+                      JSON.stringify({
+                        publicKey: keypair?.publicKey,
+                        mnemonic: keypair.mnemonic,
+                      })
+                    );
+                  }
                 },
               },
             ]}
@@ -471,7 +551,7 @@ export function KinClientApp({
                 options: [...userAccounts],
                 onChange: (user) => {
                   setSeeWallet(user);
-                  setSeeWalletDetails(null);
+                  setSeeWalletDetails('');
                 },
                 disabledInput: !userAccounts.length,
               },
@@ -479,7 +559,7 @@ export function KinClientApp({
             displayOutput={seeWalletDetails ? seeWalletDetails : null}
           />
           <br />
-          <hr />
+          <br />
         </>
       ) : null}
     </div>

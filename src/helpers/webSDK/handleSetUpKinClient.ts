@@ -1,25 +1,37 @@
-import { KinClient, KinProd, KinTest } from '@kin-sdk/client';
-
+import { KineticSdk, KineticSdkConfig } from '@kin-kinetic/sdk';
 interface HandleSetupKinClient {
   kinNetwork: string;
-  onSuccess: ({ client }: { client: KinClient }) => void;
+  onSuccess: ({ client }: { client: KineticSdk }) => void;
   onFailure: () => void;
 }
-export function handleSetUpKinClient({
+
+export async function handleSetUpKinClient({
   kinNetwork,
   onSuccess,
   onFailure,
 }: HandleSetupKinClient) {
   try {
-    const appIndex = Number(process.env.REACT_APP_APP_INDEX);
-    console.log('🚀 ~ handleSetUpKinClient', kinNetwork, appIndex);
-    if (appIndex > 0) {
-      const client = new KinClient(kinNetwork === 'Prod' ? KinProd : KinTest, {
-        appIndex,
-      });
+    const index = Number(process.env.REACT_APP_APP_INDEX);
+    const environment = kinNetwork === 'Mainnet' ? 'mainnet' : 'devnet';
+    const endpoint =
+      kinNetwork === 'Mainnet'
+        ? process.env.KINETIC_ENDPOINT
+        : process.env.KINETIC_ENDPOINT || 'https://sandbox.kinetic.host/';
+
+    if (index > 0 && endpoint) {
+      const config: KineticSdkConfig = {
+        environment,
+        endpoint,
+        index,
+      };
+      console.log('🚀 ~ config', config);
+
+      const client = await KineticSdk.setup(config);
+      console.log('🚀 ~ client', client);
+
       onSuccess({ client });
     } else {
-      throw new Error('No App Index');
+      throw new Error("Can't set up the Kin Client");
     }
   } catch (error) {
     console.log('🚀 ~ error', error);
