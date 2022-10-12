@@ -33,14 +33,15 @@
   .Kin-action-container {
     margin-bottom: 10px;
     border-radius: 5px;
-    border: 0.5px solid $white_dark;
+    padding: 10px;
+    // border: 0.5px solid $white_dark;
     background-color: $background_dark;
   }
 
   .Kin-action-trigger {
     cursor: pointer;
     padding: 10px;
-    border-bottom: 1px solid $white_dark;
+    // border-bottom: 1px solid $white_dark;
   }
 
   .Kin-action-title {
@@ -114,7 +115,7 @@
     cursor: pointer;
     transition: all 0.2s;
     margin-right: 5px;
-    border: 1px solid $white_dark;
+    // border: 1px solid $white_dark;
 
     &:hover {
       background-color: $kin;
@@ -137,7 +138,6 @@
     font-weight: lighter;
     padding: 20px;
     border-radius: 5px;
-    border: 1px solid $white_dark;
     margin: 20px auto;
 
     .bold {

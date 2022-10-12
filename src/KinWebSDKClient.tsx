@@ -120,10 +120,6 @@ export function KinClientApp({
         )}
       </div>
 
-      <br />
-      <br />
-      <br />
-
       <KinAction
         open
         title="Initialise Your Kin Client with your App Index"
