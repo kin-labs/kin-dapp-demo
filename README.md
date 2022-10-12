@@ -11,11 +11,7 @@ This app is designed to work with the following Kin Server Demos:
 - [Node / Typescript](https://github.com/kin-starters/kin-demo-node-sdk)
 - [Python](https://github.com/kin-starters/kin-demo-python-sdk)
 
-  or
-
 ## Via the [Kin TypeScript SDK](https://github.com/kin-sdk/kin-sdk-web) in the browser
-
-or
 
 ## Via Solana Directly / SDK-less
 
