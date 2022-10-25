@@ -8,13 +8,14 @@
 
   .Kin-status {
     border-radius: 5px;
+    border: 1px solid $white_dark;
     margin: 0 auto 20px;
     text-align: center;
     width: calc(100% - 40px);
     padding: 20px;
     transition: all 0.4s 0.5s;
     color: $white_dark;
-    background-color: $background_dark;
+    background-color: $red_dark;
 
     &.up,
     &.hasAppIndex {
@@ -34,8 +35,8 @@
     margin-bottom: 10px;
     border-radius: 5px;
     padding: 10px;
-    // border: 0.5px solid $white_dark;
-    background-color: $background_dark;
+    border: 0.5px solid $white_dark;
+    // background-color: $background_dark;
   }
 
   .Kin-action-trigger {
