@@ -19,7 +19,7 @@ export const kinLinks = {
   docs: [
     {
       name: 'Docs',
-      link: 'https://developer.kin.org',
+      link: 'https://developer.kin.org/docs/developers',
     },
     {
       name: 'Discord',
