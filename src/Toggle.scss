@@ -4,13 +4,17 @@
   width: 100%;
   margin-bottom: 20px;
 
+  .Toggle-title {
+    text-align: left;
+  }
+
   .Toggle-options {
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     width: 100%;
     transition: all 0.4s;
-    // border: 1px solid $white_dark;
+    border: 2px solid rgb(31, 41, 55);
     // background-color: $background_dark;
     border-radius: 5px;
   }
@@ -18,31 +22,33 @@
   .Toggle-option {
     box-sizing: border-box;
     transition: all 0.4s;
-    padding: 20px;
+    padding: 40px 20px;
     cursor: pointer;
     text-align: center;
     width: 100%;
-    border: 1px solid $white_dark;
+    background-color: $background_lighter;
+    // border-left: 1px solid $white;
 
     &:hover {
-      background-color: $kin_light;
-      color: $white_dark;
+      background-color: $background_purple;
+      color: $text_darker;
     }
 
     &:first-of-type {
       border-radius: 5px 0 0 5px;
+      border-left: none;
     }
     &:last-of-type {
       border-radius: 0 5px 5px 0;
     }
 
     &:not(:last-of-type) {
-      border-right: 1px solid $kin_dark;
+      border-right: 1px solid $border;
     }
 
     &.selected {
-      background-color: $kin_dark;
-      color: $white_dark;
+      background-color: $background_purple;
+      color: $text_darker;
       pointer-events: none;
     }
   }

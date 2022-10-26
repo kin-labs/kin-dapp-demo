@@ -33,11 +33,11 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const appTypes = [
-    'Backend Server - Kin SDK',
     'DApp - Kin SDK',
+    'Backend Server - Kin SDK',
     'DApp - SDK-less',
   ];
-  const [selectedAppType, setSelectedAppType] = useState(appTypes[1]);
+  const [selectedAppType, setSelectedAppType] = useState(appTypes[0]);
 
   const [kineticClient, setKinClient] = useState<KineticSdk | null>(null);
   const [kineticClientNetwork, setKinClientNetwork] = useState('Test');
@@ -68,10 +68,20 @@ function App() {
               alt="logo"
             />
           </div>
+
           <span>DApp Playground</span>
-          <span>
-            <Links links={kinLinks.docs} />
+          <Links links={kinLinks.docs} />
+          <span className="explanation">
+            Play with Kin using our SDKs in the browser or connected to a
+            server. Or try it out SDK-less and transact on Solana directly
           </span>
+        </div>
+        <div className="App-nav-hero-container">
+          <img
+            src="https://developer.kin.org/images/kin-cube.png"
+            className="Hero-image"
+            alt="Kin"
+          />
         </div>
       </nav>
       <main className="App-body">
@@ -84,12 +94,12 @@ function App() {
           />
 
           {(() => {
-            if (selectedAppType === appTypes[0]) {
+            if (selectedAppType === appTypes[1]) {
               return (
                 <KinServerApp makeToast={makeToast} setLoading={setLoading} />
               );
             }
-            if (selectedAppType === appTypes[1]) {
+            if (selectedAppType === appTypes[0]) {
               return (
                 <KinClientApp
                   makeToast={makeToast}

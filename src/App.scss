@@ -1,10 +1,10 @@
 @import './constants.scss';
 
 .App {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Lato', 'Open Sans', sans-serif;
   text-align: center;
-  color: $white_dark;
-  background-color: $black;
+  color: $text_darker;
+  // background-color: $black;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -13,44 +13,76 @@
 }
 
 .App-nav {
-  margin: 0 auto;
+  margin: 100px auto 20px;
   width: 100%;
+  max-width: 1024px;
   padding: 20px 0;
+  display: flex;
+  flex-direction: row;
 
   .App-nav-container {
-    margin: auto;
-    max-width: 800px;
+    width: 50%;
+    max-width: 1024px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
     .App-logo-container {
+      width: 200px;
       height: 70px;
-      margin: auto 0;
-      border: 1px solid white;
-      border-radius: 5px;
+      margin: auto 0 auto 0;
+      // border: 1px solid white;
+      // border-radius: 5px;
     }
 
     .App-logo {
       height: 100%;
       pointer-events: none;
-      margin: -2px 0 auto;
+      margin: auto auto auto -110px;
     }
 
     span {
-      margin: auto auto auto 10px;
-      padding: none;
-      font-size: 30px;
-      color: $white;
+      margin: auto auto 0 0;
+      padding: 0;
+      font-size: 90px;
+      color: $text;
+      font-weight: 700;
+      text-align: left;
     }
 
-    span:last-of-type {
-      margin: auto 0 auto auto;
+    .Links {
+      margin-top: 10px;
+      font-size: 30px;
+    }
+
+    .Links span {
+      font-size: 24px;
+      color: $text_darker;
     }
 
     .link {
+      font-weight: 100;
       text-decoration: none;
       font-size: 20px;
     }
+
+    .explanation {
+      color: $text_darker;
+      font-weight: 100;
+      margin-top: 20px;
+      text-align: left;
+      font-size: 16px;
+    }
+  }
+
+  .App-nav-hero-container {
+    flex-grow: 1;
+    display: flex;
+  }
+
+  .Hero-image {
+    width: 200px;
+    margin: auto 100px auto auto;
+    transform: scale(2.5);
   }
 }
 
@@ -60,22 +92,22 @@
   }
 
   .App-nav-container {
-    padding: 0 5px;
+    padding: 0;
   }
 }
 
 .App-link {
-  color: $white_dark;
+  color: $kin;
 }
 
 .App-body {
   padding: 30px;
   flex-grow: 1;
-  background-color: $black;
+  // background-color: $black;
 
   .App-body-container {
     margin: auto;
-    max-width: 800px;
+    max-width: 1024px;
   }
 }
 

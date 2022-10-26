@@ -8,56 +8,65 @@
 
   .Kin-status {
     border-radius: 5px;
-    border: 1px solid $white_dark;
+    border: 1px solid $border;
     margin: 0 auto 20px;
     text-align: center;
     width: calc(100% - 40px);
-    padding: 20px;
+    padding: 40px 20px;
     transition: all 0.4s 0.5s;
-    color: $white_dark;
-    background-color: $red_dark;
+    color: $text_darker;
+    background-color: $background_red;
 
     &.up,
     &.hasAppIndex {
-      background-color: $kin_dark;
+      background-color: $background_purple;
     }
   }
 
   .Kin-link {
-    color: $white_dark;
+    color: $text_darker;
 
     &:visited {
-      color: $white_dark;
+      color: $text_darker;
     }
   }
 
   .Kin-action-container {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border-radius: 5px;
-    padding: 10px;
-    border: 0.5px solid $white_dark;
-    // background-color: $background_dark;
+    // border: 1px solid $white;
+    background-color: $background_lighter;
+    color: $text_darker;
   }
 
   .Kin-action-trigger {
+    background-color: $background_purple;
     cursor: pointer;
-    padding: 10px;
-    // border-bottom: 1px solid $white_dark;
+    padding: 40px;
+    border: 1px solid $border;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-sizing: border-box;
   }
 
   .Kin-action-title {
     font-weight: bold;
+    margin-bottom: 5px;
   }
 
   .Kin-action-subTitle {
-    margin: 0;
+    margin: 0 0 5px;
   }
 
   .Kin-action {
     border-radius: 0 0 5px 5px;
-    margin: auto;
-    width: calc(100% - 40px);
-    padding: 20px;
+    width: 100%;
+    padding: 40px;
+    border: 1px solid $border;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top: none;
+    box-sizing: border-box;
 
     .links {
       margin: 0 0 20px;
@@ -95,12 +104,16 @@
     padding: 5px;
     min-width: 250px;
     max-width: 500px;
+    background-color: $background_purple;
+    color: $text_darker;
   }
 
   .Kin-action-input-option {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    background-color: $background_purple;
+    color: $text_darker;
   }
 
   .Kin-action-buttons {
@@ -109,17 +122,19 @@
   }
 
   .Kin-action-button {
-    background-color: $kin_dark;
-    color: $white;
-    padding: 10px;
+    // background-color: $kin_dark;
+    border: 1px solid $border;
     border-radius: 5px;
+    background-color: $background_purple;
+    color: $text_darker;
+    padding: 20px 30px;
     cursor: pointer;
     transition: all 0.2s;
-    margin-right: 5px;
-    // border: 1px solid $white_dark;
+    margin-right: 10px;
+    // border: 1px solid $white;
 
     &:hover {
-      background-color: $kin;
+      background-color: $background;
     }
   }
 
@@ -135,11 +150,14 @@
   }
 
   .Kin-explanation {
-    color: $white_dark;
+    // border: 1px solid $white;
+    color: $text_darker;
     font-weight: lighter;
-    padding: 20px;
+    padding: 40px;
     border-radius: 5px;
     margin: 20px auto;
+    background-color: $background_lighter;
+    border: 1px solid $border;
 
     .bold {
       font-weight: bold;
