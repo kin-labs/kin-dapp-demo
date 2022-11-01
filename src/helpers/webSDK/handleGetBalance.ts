@@ -25,10 +25,7 @@ export async function handleGetBalance({
       account: publicKey,
     });
 
-    const balanceInKin = Number(balance) / 100000;
-    console.log('🚀 ~ balanceInKin', balanceInKin);
-
-    onSuccess(balanceInKin.toString());
+    onSuccess(balance);
   } catch (error) {
     console.log('🚀 ~ error', error);
     onFailure();

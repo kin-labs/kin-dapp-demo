@@ -283,9 +283,9 @@ export function KinClientApp({
 
             return null;
           })()}
-          {kinNetwork === 'Test' ? (
+          {kinNetwork === 'Devnet' ? (
             <KinAction
-              title="Request Airdrop (Test Network Only)"
+              title="Request Airdrop (Devnet Only)"
               subTitle="Get some kin so you can start testing your transaction code"
               links={kinLinks.clientCodeSamples.methods.requestAirdrop}
               disabled={!userAccounts.length || !airdropAmount}

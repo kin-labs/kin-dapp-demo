@@ -1,6 +1,5 @@
 import { KineticSdk, MakeTransferOptions } from '@kin-kinetic/sdk';
-import { TransactionType } from '@kin-tools/kin-memo';
-import { Commitment } from '@kin-kinetic/solana';
+import { Commitment, TransactionType } from '@kin-kinetic/solana';
 import { saveTransaction, getKeypair } from '..';
 import { Keypair } from '@kin-kinetic/keypair';
 
