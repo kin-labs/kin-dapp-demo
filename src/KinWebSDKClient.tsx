@@ -87,13 +87,13 @@ export function KinClientApp({
 
         <br />
         <br />
-        {`Create and send transactions via the Kin TypeScript SDK directly from the browser`}
+        {`Create and send transactions via the Kin TypeScript SDK directly from the browser.`}
         <br />
         <Links links={kinLinks.webSDK} />
         <br />
         <br />
 
-        {`Private keys are generated on a non-custodial basis and stored in the user's browser`}
+        {`Private keys are generated on a non-custodial basis and stored in the user's browser.`}
         <br />
         <br />
 

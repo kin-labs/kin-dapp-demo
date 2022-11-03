@@ -45,8 +45,8 @@ export const kinLinks = {
   ],
   SDKless: [
     {
-      name: 'Blog - Introducing Kin SDK-Less Transactions',
-      link: 'https://kin.org/introducing-kin-sdk-less-transactions/',
+      name: 'Kin SDK-less',
+      link: 'https://developer.kin.org/docs/developers/sdk-less',
     },
   ],
 
@@ -64,7 +64,7 @@ export const kinLinks = {
     {
       name: 'Non-Custodial vs Custodial Wallets',
       link:
-        'https://developer.kin.org/docs/best-practices/#non-custodial-vs-custodial-wallets-and-private-key-storage',
+        'https://developer.kin.org/docs/essentials/best-practices#noncustodial-vs-custodial-wallets-and-private-key-storage',
     },
   ],
   KRE: [
@@ -104,11 +104,11 @@ export const kinLinks = {
   demoServers: [
     {
       name: 'TypeScript',
-      link: 'https://github.com/kin-starters/kinetic-demo-node-sdk',
+      link: 'https://github.com/kin-starters/kinetic-typescript-demo-server',
     },
     {
       name: 'Python',
-      link: 'https://github.com/kin-starters/kinetic-demo-python-sdk',
+      link: 'hhttps://github.com/kin-starters/kinetic-python-demo-server',
     },
   ],
   serverCodeSamples: {
