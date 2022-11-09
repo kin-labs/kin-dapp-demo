@@ -169,6 +169,8 @@ export function KinClientApp({
           <h3 className="Kin-section">{`Manage Kin Accounts`}</h3>
           <KinAction
             title="Create a Kin Account for a User"
+            subTitle="If you've turned on the 'verify' webhook in Kinetic, make sure your server is running so that it can validate this transaction."
+            subTitleLinks={kinLinks.webhooks}
             links={kinLinks.clientCodeSamples.methods.createAccount}
             actions={[
               {
@@ -336,7 +338,7 @@ export function KinClientApp({
           <KinAction
             title="Send Kin from User to User -  P2P Transaction"
             links={kinLinks.clientCodeSamples.methods.submitPayment}
-            subTitle="If you've added a Transactions Webhook URL on the Kin Developer Portal, make sure your server is running so that it can validate this transaction."
+            subTitle="If you've turned on the 'verify' webhook in Kinetic, make sure your server is running so that it can validate this transaction."
             subTitleLinks={kinLinks.webhooks}
             actions={[
               {

@@ -15,8 +15,9 @@ export async function handleSetUpKinClient({
     const environment = kinNetwork === 'Mainnet' ? 'mainnet' : 'devnet';
     const endpoint =
       kinNetwork === 'Mainnet'
-        ? process.env.KINETIC_ENDPOINT
-        : process.env.KINETIC_ENDPOINT || 'https://sandbox.kinetic.host/';
+        ? process.env.REACT_APP_KINETIC_ENDPOINT
+        : process.env.REACT_APP_KINETIC_ENDPOINT ||
+          'https://sandbox.kinetic.host/';
 
     if (index > 0 && endpoint) {
       const config: KineticSdkConfig = {

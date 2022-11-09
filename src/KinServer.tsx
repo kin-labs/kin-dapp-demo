@@ -277,6 +277,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
 
           <KinAction
             title="Create a Kin Account for a User"
+            subTitle="Requires 'verify' Webhook if you've added it on in Kinetic"
+            subTitleLinks={kinLinks.webhooks}
             linksTitle={kinLinks.serverCodeSamples.title}
             links={kinLinks.serverCodeSamples.methods.createAccount}
             actions={[
@@ -446,6 +448,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
 
           <KinAction
             title="Pay Kin from App To User - Earn Transaction"
+            subTitle="Requires 'verify' Webhook if you've added it on in Kinetic"
+            subTitleLinks={kinLinks.webhooks}
             linksTitle={kinLinks.serverCodeSamples.title}
             links={kinLinks.serverCodeSamples.methods.submitPayment}
             actions={[
@@ -497,6 +501,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
           />
           <KinAction
             title="Send Batch of Earn Transactions"
+            subTitle="Requires 'verify' Webhook if you've added it on in Kinetic"
+            subTitleLinks={kinLinks.webhooks}
             linksTitle={kinLinks.serverCodeSamples.title}
             links={kinLinks.serverCodeSamples.methods.submitBatch}
             actions={[
@@ -569,10 +575,10 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
           />
           <KinAction
             title="Pay Kin from User To App - Spend Transaction"
+            subTitle="Requires 'verify' Webhook if you've added it on in Kinetic"
+            subTitleLinks={kinLinks.webhooks}
             linksTitle={kinLinks.serverCodeSamples.title}
             links={kinLinks.serverCodeSamples.methods.submitPayment}
-            subTitle="Requires 'verify' Webhook if you've added it on the Kin Developer Portal"
-            subTitleLinks={kinLinks.webhooks}
             actions={[
               {
                 name: 'Pay',
@@ -622,7 +628,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             title="Send Kin from User to User -  P2P Transaction"
             linksTitle={kinLinks.serverCodeSamples.title}
             links={kinLinks.serverCodeSamples.methods.submitPayment}
-            subTitle="Requires 'verify' Webhook if you've added it on the Kin Developer Portal"
+            subTitle="Requires 'verify' Webhook if you've added it on in Kinetic"
             subTitleLinks={kinLinks.webhooks}
             actions={[
               {
