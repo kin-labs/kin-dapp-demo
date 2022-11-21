@@ -34,6 +34,12 @@ export async function handleCreateAccount({
       owner: keypair,
       commitment: Commitment.Finalized,
     });
+
+    const { errors } = account;
+    if (errors?.length) {
+      throw new Error(errors[0]?.message);
+    }
+
     console.log('🚀 ~ account', account);
     saveKeypair(keypair, kinNetwork);
     onSuccess();

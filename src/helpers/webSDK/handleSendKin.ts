@@ -54,6 +54,11 @@ export async function handleSendKin({
       const transfer = await kineticClient.makeTransfer(transactionOptions);
       console.log('🚀 ~ transfer', transfer);
 
+      const { errors } = transfer;
+      if (errors?.length) {
+        throw new Error(errors[0]?.message);
+      }
+
       if (transfer?.signature) {
         saveTransaction(transfer.signature, kinNetwork);
       }
