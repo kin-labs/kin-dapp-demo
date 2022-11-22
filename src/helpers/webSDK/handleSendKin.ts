@@ -27,7 +27,7 @@ export async function handleSendKin({
   console.log('🚀 ~ handleSendKin', type, from, to, amount);
   try {
     const keypair = getKeypair(from, kinNetwork);
-    const owner = keypair?.mnemonic && Keypair.fromMnemonic(keypair.mnemonic);
+    const owner = keypair?.mnemonic && Keypair.fromSecret(keypair.mnemonic);
     console.log('🚀 ~ owner', owner);
     const destination = to;
     console.log('🚀 ~ destination', destination);

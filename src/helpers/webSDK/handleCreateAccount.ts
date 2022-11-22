@@ -27,7 +27,7 @@ export async function handleCreateAccount({
   try {
     const mnemonic = Keypair.generateMnemonic();
     console.log('🚀 ~ mnemonic', mnemonic);
-    const keypair = Keypair.fromMnemonic(mnemonic);
+    const keypair = Keypair.fromSecret(mnemonic);
     console.log('🚀 ~ keypair', keypair);
 
     const account = await kineticClient.createAccount({
