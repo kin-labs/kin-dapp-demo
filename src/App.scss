@@ -27,17 +27,15 @@
     flex-direction: column;
 
     .App-logo-container {
-      width: 200px;
-      height: 70px;
-      margin: auto 0 auto 0;
-      // border: 1px solid white;
-      // border-radius: 5px;
+      width: 100px;
+      height: 80px;
+      margin: auto 0 20px 0;
     }
 
     .App-logo {
       height: 100%;
-      pointer-events: none;
-      margin: auto auto auto -100px;
+      // pointer-events: none;
+      margin: auto auto auto 5px;
     }
 
     span {

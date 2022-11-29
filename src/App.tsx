@@ -6,7 +6,8 @@ import Loader from 'react-loader-spinner';
 import { colors, kinLinks, SolanaNetwork } from './constants';
 import { MakeToast } from './helpers';
 
-// import logo from './kin-white.svg';
+import logo from './images/kin-logo-violet.png';
+import cube from './images/kin-cube.png';
 import { Toggle } from './Toggle';
 import { KinServerApp } from './KinServer';
 import { KinClientApp } from './KinWebSDKClient';
@@ -60,13 +61,13 @@ function App() {
       <nav className="App-nav">
         <div className="App-nav-container">
           <div className="App-logo-container">
-            <img
-              src={
-                'https://developer.kin.org/branding/kin-logo-white-sideicon.svg'
-              }
-              className="App-logo"
-              alt="logo"
-            />
+            <a
+              href="https://developer.kin.org"
+              rel="noreferrer noopener"
+              target="_blank"
+            >
+              <img src={logo} className="App-logo" alt="logo" />
+            </a>
           </div>
 
           <span>DApp Playground</span>
@@ -77,11 +78,7 @@ function App() {
           </span>
         </div>
         <div className="App-nav-hero-container">
-          <img
-            src="https://developer.kin.org/images/kin-cube.png"
-            className="Hero-image"
-            alt="Kin"
-          />
+          <img src={cube} className="Hero-image" alt="Kin" />
         </div>
       </nav>
       <main className="App-body">
