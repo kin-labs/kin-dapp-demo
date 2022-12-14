@@ -24,6 +24,8 @@ import { handleSendKin, HandleSendKin } from './helpers/webSDK/handleSendKin';
 import './Kin.scss';
 import { handleGetTransactionData } from './helpers/webSDK/handleGetTransactionData';
 import { handleGetHistory } from './helpers/webSDK/handleGetHistory';
+import { handleGetAccountInfo } from './helpers/webSDK/handleGetAccountInfo';
+import { handleCloseAccount } from './helpers/webSDK/handleCloseAccount';
 
 interface KinClientAppProps {
   makeToast: (arg: MakeToast) => void;
@@ -59,6 +61,8 @@ export function KinClientApp({
 
   const [newUserName, setNewUserName] = useState('');
 
+  const [closeAccountUser, setCloseAccountUser] = useState('');
+
   const [balanceUser, setBalanceUser] = useState('');
   const [displayBalance, setDisplayBalance] = useState('');
 
@@ -75,6 +79,9 @@ export function KinClientApp({
 
   const [historyUser, setHistoryUser] = useState('');
   const [historyData, setHistoryData] = useState('');
+
+  const [accountInfoUser, setAccountInfoUser] = useState('');
+  const [accountInfoData, setAccountInfoData] = useState('');
 
   const [seeWallet, setSeeWallet] = useState('');
 
@@ -125,7 +132,7 @@ export function KinClientApp({
         title="Initialise Your Kin Client with your App Index"
         subTitle="Make sure you've registered your App on the Kin Developer Portal | Remember to add your environment variable for your App Index"
         subTitleLinks={kinLinks.devPortal}
-        links={kinLinks.clientCodeSamples.methods.setUpKinClient}
+        links={[kinLinks.codeSamples.methods.setUpKinClient[0]]}
         disabled={!process.env.REACT_APP_APP_INDEX}
         actions={[
           {
@@ -171,7 +178,7 @@ export function KinClientApp({
             title="Create a Kin Account for a User"
             subTitle="If you've turned on the 'verify' webhook in Kinetic, make sure your server is running so that it can validate this transaction."
             subTitleLinks={kinLinks.webhooks}
-            links={kinLinks.clientCodeSamples.methods.createAccount}
+            links={[kinLinks.codeSamples.methods.createAccount[0]]}
             actions={[
               {
                 name: 'Create',
@@ -211,8 +218,67 @@ export function KinClientApp({
             ]}
           />{' '}
           <KinAction
+            title="Close an Empty Account"
+            links={[kinLinks.codeSamples.methods.getBalance[0]]}
+            disabled={!userAccounts.length}
+            actions={[
+              {
+                name: 'Close Account',
+                onClick: () => {
+                  setLoading(true);
+                  handleCloseAccount({
+                    kineticClient,
+                    user: closeAccountUser || userAccounts[0],
+                    kinNetwork: kineticClientNetwork,
+                    onSuccess: () => {
+                      setShouldUpdate(true);
+                      setLoading(false);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({
+                        text: "Couldn't close Account!",
+                        happy: false,
+                      });
+                    },
+                  });
+                },
+              },
+              {
+                name: 'See in Explorer',
+                onClick: () => {
+                  const address = getPublicKey(
+                    closeAccountUser || userAccounts[0],
+                    kineticClientNetwork
+                  );
+                  if (!address) {
+                    makeToast({
+                      text: "Couldn't find user's address",
+                      happy: false,
+                    });
+                  } else {
+                    openExplorer({
+                      address,
+                      kinNetwork,
+                    });
+                  }
+                },
+              },
+            ]}
+            inputs={[
+              {
+                name: 'User',
+                value: closeAccountUser,
+                options: userAccounts,
+                onChange: (user) => {
+                  setCloseAccountUser(user);
+                },
+              },
+            ]}
+          />
+          <KinAction
             title="Get an Account Balance"
-            links={kinLinks.clientCodeSamples.methods.getBalance}
+            links={[kinLinks.codeSamples.methods.getBalance[0]]}
             disabled={!userAccounts.length}
             actions={[
               {
@@ -289,7 +355,7 @@ export function KinClientApp({
             <KinAction
               title="Request Airdrop (Devnet Only)"
               subTitle="Get some kin so you can start testing your transaction code"
-              links={kinLinks.clientCodeSamples.methods.requestAirdrop}
+              links={[kinLinks.codeSamples.methods.requestAirdrop[0]]}
               disabled={!userAccounts.length || !airdropAmount}
               actions={[
                 {
@@ -337,7 +403,7 @@ export function KinClientApp({
           ) : null}
           <KinAction
             title="Send Kin from User to User -  P2P Transaction"
-            links={kinLinks.clientCodeSamples.methods.submitPayment}
+            links={[kinLinks.codeSamples.methods.submitPayment[0]]}
             subTitle="If you've turned on the 'verify' webhook in Kinetic, make sure your server is running so that it can validate this transaction."
             subTitleLinks={kinLinks.webhooks}
             actions={[
@@ -384,7 +450,7 @@ export function KinClientApp({
                 name: 'From',
                 value: payFromUserP2P || userAccounts[0],
                 options: userAccounts,
-                disabledInput: !userAccounts[1],
+                disabledInput: !userAccounts[0],
                 onChange: (user) => {
                   setPayFromUserP2P(user);
                 },
@@ -399,21 +465,27 @@ export function KinClientApp({
                 },
               },
               {
+                name: 'Address to Send To',
+                value: payToUserP2P,
+                type: 'string',
+                onChange: setPayToUserP2P,
+              },
+              {
                 name: 'Amount to Send',
                 value: payAmountP2P,
                 type: 'number',
-                disabledInput: !userAccounts[1],
+                disabledInput: !userAccounts[0],
                 onChange: setPayAmountP2P,
               },
             ]}
-            disabled={!payAmountP2P || !userAccounts[1]}
+            disabled={!payAmountP2P || (!userAccounts[1] && !payToUserP2P)}
           />
           <br />
           <br />
           <h3 className="Kin-section">{`Get Transaction Details and History`}</h3>
           <KinAction
             title="View Transaction"
-            links={kinLinks.clientCodeSamples.methods.getTransactionDetails}
+            links={[kinLinks.codeSamples.methods.getTransaction[0]]}
             subTitle="See the details of your transactions"
             disabled={!transactions.length && !inputTransaction}
             actions={[
@@ -472,7 +544,7 @@ export function KinClientApp({
           <KinAction
             title="Get Account History"
             subTitle="See the list of transactions associated with this Account"
-            links={kinLinks.clientCodeSamples.methods.getAccountHistory}
+            links={[kinLinks.codeSamples.methods.getHistory[0]]}
             disabled={!userAccounts.length}
             actions={[
               {
@@ -481,7 +553,7 @@ export function KinClientApp({
                   setLoading(true);
                   handleGetHistory({
                     kineticClient,
-                    user: balanceUser || userAccounts[0],
+                    user: historyUser || userAccounts[0],
                     kinNetwork: kineticClientNetwork,
                     onSuccess: (history) => {
                       setLoading(false);
@@ -517,6 +589,55 @@ export function KinClientApp({
               },
             ]}
             displayOutput={historyData ? historyData : null}
+          />
+          <KinAction
+            title="Get Account Info"
+            subTitle="See the details of this Account"
+            links={[kinLinks.codeSamples.methods.getAccountInfo[0]]}
+            disabled={!userAccounts.length}
+            actions={[
+              {
+                name: 'Get Account Info',
+                onClick: () => {
+                  setLoading(true);
+                  handleGetAccountInfo({
+                    kineticClient,
+                    user: accountInfoUser || userAccounts[0],
+                    kinNetwork: kineticClientNetwork,
+                    onSuccess: (accountInfo) => {
+                      setLoading(false);
+                      setAccountInfoData(accountInfo);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({
+                        text: "Couldn't get Account Info!",
+                        happy: false,
+                      });
+                    },
+                  });
+                },
+              },
+              {
+                name: 'View on Solana Explorer',
+                onClick: () => {
+                  const address = accountInfoUser;
+                  openExplorer({ address, solanaNetwork: kinNetwork });
+                },
+              },
+            ]}
+            inputs={[
+              {
+                name: 'User',
+                value: accountInfoUser,
+                options: userAccounts,
+                onChange: (user) => {
+                  setAccountInfoUser(user);
+                  setAccountInfoData('');
+                },
+              },
+            ]}
+            displayOutput={accountInfoData ? accountInfoData : null}
           />
           <br />
           <br />

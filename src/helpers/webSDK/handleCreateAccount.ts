@@ -2,7 +2,7 @@ import { KineticSdk } from '@kin-kinetic/sdk';
 import { Keypair } from '@kin-kinetic/keypair';
 import { Commitment } from '@kin-kinetic/solana';
 
-import { saveKeypair } from '..';
+import { saveKeypair, saveTransaction } from '..';
 
 interface HandleCreateAccount {
   kineticClient: KineticSdk;
@@ -38,6 +38,10 @@ export async function handleCreateAccount({
     const { errors } = account;
     if (errors?.length) {
       throw new Error(errors[0]?.message);
+    }
+
+    if (account?.signature) {
+      saveTransaction(account.signature, kinNetwork);
     }
 
     console.log('🚀 ~ account', account);

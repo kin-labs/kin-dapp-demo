@@ -111,7 +111,7 @@ export const kinLinks = {
       link: 'hhttps://github.com/kin-starters/kinetic-python-demo-server',
     },
   ],
-  serverCodeSamples: {
+  codeSamples: {
     title: 'See the Code: ',
     methods: {
       setUpKinClient: [
@@ -137,6 +137,19 @@ export const kinLinks = {
           name: 'Python',
           link:
             'https://developer.kin.org/docs/developers/python#create-account',
+        },
+      ],
+      closeAccount: [
+        {
+          name: 'TypeScript',
+          sdk: 'https://github.com/kinecosystem/kin-node',
+          link:
+            'https://developer.kin.org/docs/developers/typescript#close-account',
+        },
+        {
+          name: 'Python',
+          link:
+            'https://developer.kin.org/docs/developers/python#close-account',
         },
       ],
       getBalance: [
@@ -187,6 +200,30 @@ export const kinLinks = {
             'https://developer.kin.org/docs/developers/python#get-account-history',
         },
       ],
+      getAccountInfo: [
+        {
+          name: 'TypeScript',
+          link:
+            'https://developer.kin.org/docs/developers/typescript#get-account-history',
+        },
+        {
+          name: 'Python',
+          link:
+            'https://developer.kin.org/docs/developers/python#get-account-history',
+        },
+      ],
+      getTokenAccounts: [
+        {
+          name: 'TypeScript',
+          link:
+            'https://developer.kin.org/docs/developers/typescript#get-token-accounts',
+        },
+        {
+          name: 'Python',
+          link:
+            'https://developer.kin.org/docs/developers/python#get-token-accounts',
+        },
+      ],
       submitPayment: [
         {
           name: 'TypeScript',
@@ -208,59 +245,6 @@ export const kinLinks = {
           name: 'Python',
           link:
             'https://developer.kin.org/docs/developers/python#transfer-kin-batch',
-        },
-      ],
-    },
-  },
-  clientCodeSamples: {
-    methods: {
-      setUpKinClient: [
-        {
-          name: 'See the Code',
-          link:
-            'https://developer.kin.org/docs/developers/typescript#instantiate-the-kinetic-client',
-        },
-      ],
-      createAccount: [
-        {
-          name: 'See the Code',
-          link:
-            'https://developer.kin.org/docs/developers/typescript#create-account',
-        },
-      ],
-      getBalance: [
-        {
-          name: 'See the Code',
-          link:
-            'https://developer.kin.org/docs/developers/typescript#check-balance',
-        },
-      ],
-      requestAirdrop: [
-        {
-          name: 'See the Code',
-          link:
-            'https://developer.kin.org/docs/developers/typescript#airdrop-funds-devnet',
-        },
-      ],
-      submitPayment: [
-        {
-          name: 'See the Code',
-          link:
-            'https://developer.kin.org/docs/developers/typescript#transfer-kin',
-        },
-      ],
-      getTransactionDetails: [
-        {
-          name: 'See the Code',
-          link:
-            'https://developer.kin.org/docs/developers/typescript#get-transaction-details',
-        },
-      ],
-      getAccountHistory: [
-        {
-          name: 'See the Code',
-          link:
-            'https://developer.kin.org/docs/developers/typescript#get-account-history',
         },
       ],
     },

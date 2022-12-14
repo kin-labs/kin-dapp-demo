@@ -101,6 +101,30 @@ export async function handleCreateAccount({
     onFailure();
   }
 }
+interface HandleCloseAccount {
+  user: string;
+  onSuccess: (arg: number) => void;
+  onFailure: () => void;
+}
+
+export async function handleCloseAccount({
+  onSuccess,
+  onFailure,
+  user,
+}: HandleCloseAccount) {
+  console.log('🚀 ~ handleCloseAccount', user);
+  try {
+    const baseUrl = process.env.REACT_APP_SERVER_URL;
+    if (!baseUrl) throw new Error('No URL');
+
+    const url = `${baseUrl}/close-account?user=${user}`;
+    const response: BalanceResponse = await axios.get(url);
+    onSuccess(response.data);
+  } catch (error) {
+    console.log('🚀 ~ error', error);
+    onFailure();
+  }
+}
 interface HandleGetBalance {
   user: string;
   onSuccess: (arg: number) => void;
@@ -142,6 +166,56 @@ export async function handleGetHistory({
     if (!baseUrl) throw new Error('No URL');
 
     const url = `${baseUrl}/history?user=${user}`;
+    const response: Response = await axios.get(url);
+    onSuccess(response.data);
+  } catch (error) {
+    console.log('🚀 ~ error', error);
+    onFailure();
+  }
+}
+
+interface HandleGetAccountInfo {
+  user: string;
+  onSuccess: (arg: string) => void;
+  onFailure: () => void;
+}
+
+export async function handleGetAccountInfo({
+  onSuccess,
+  onFailure,
+  user,
+}: HandleGetAccountInfo) {
+  console.log('🚀 ~ handleGetAccountInfo', user);
+  try {
+    const baseUrl = process.env.REACT_APP_SERVER_URL;
+    if (!baseUrl) throw new Error('No URL');
+
+    const url = `${baseUrl}/account-info?user=${user}`;
+    const response: Response = await axios.get(url);
+    onSuccess(response.data);
+  } catch (error) {
+    console.log('🚀 ~ error', error);
+    onFailure();
+  }
+}
+
+interface HandleGetTokenAccounts {
+  user: string;
+  onSuccess: (arg: string) => void;
+  onFailure: () => void;
+}
+
+export async function handleGetTokenAccounts({
+  onSuccess,
+  onFailure,
+  user,
+}: HandleGetTokenAccounts) {
+  console.log('🚀 ~ handleGetTokenAccounts', user);
+  try {
+    const baseUrl = process.env.REACT_APP_SERVER_URL;
+    if (!baseUrl) throw new Error('No URL');
+
+    const url = `${baseUrl}/token-accounts?user=${user}`;
     const response: Response = await axios.get(url);
     onSuccess(response.data);
   } catch (error) {

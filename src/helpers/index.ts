@@ -18,6 +18,15 @@ export function saveKeypair(keypair: Keypair, kinNetwork: string) {
     secureLocalStorage.set(`keypairs${kinNetwork}`, [...keypairs, keypair]);
 }
 
+export function deleteKeypair(publicKey: string, kinNetwork: string) {
+  const keypairs = secureLocalStorage.get(`keypairs${kinNetwork}`) || [];
+
+  secureLocalStorage.set(
+    `keypairs${kinNetwork}`,
+    keypairs.filter((kp: Keypair) => kp.publicKey !== publicKey)
+  );
+}
+
 export function getKeypairs(kinNetwork: string): string[] {
   try {
     const keypairs = secureLocalStorage.get(`keypairs${kinNetwork}`) || [];

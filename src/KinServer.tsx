@@ -17,11 +17,14 @@ import {
   handleSendBatch,
   handleGetTransaction,
   handleGetHistory,
+  handleGetTokenAccounts,
   Transaction,
   User,
   BatchPayment,
   HandleSendKin,
   HandleSendBatch,
+  handleCloseAccount,
+  handleGetAccountInfo,
 } from './helpers/serverSDK';
 
 import './Kin.scss';
@@ -91,11 +94,19 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
 
   const [newUserName, setNewUserName] = useState('');
 
+  const [closeAccountUser, setCloseAccountUser] = useState('App');
+
   const [balanceUser, setBalanceUser] = useState('App');
   const [displayBalance, setDisplayBalance] = useState('');
 
+  const [accountInfoUser, setAccountInfoUser] = useState('App');
+  const [gotAccountInfo, setGotAccountInfo] = useState('');
+
   const [historyUser, setHistoryUser] = useState('App');
   const [gotHistory, setGotHistory] = useState('');
+
+  const [tokenAccountsUser, setTokenAccountsUser] = useState('App');
+  const [gotTokenAccounts, setGotTokenAccounts] = useState('');
 
   const [airdropUser, setAirdropUser] = useState('App');
   const [airdropAmount, setAirdropAmount] = useState('');
@@ -229,8 +240,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             title="Initialise your Kin Client on the Server"
             subTitle="Choose your environment"
             subTitleLinks={kinLinks.devPortal}
-            linksTitle={kinLinks.serverCodeSamples.title}
-            links={kinLinks.serverCodeSamples.methods.setUpKinClient}
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.setUpKinClient}
             actions={[
               {
                 name: 'Setup',
@@ -279,8 +290,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             title="Create a Kin Account for a User"
             subTitle="Requires 'verify' Webhook if you've added it on in Kinetic"
             subTitleLinks={kinLinks.webhooks}
-            linksTitle={kinLinks.serverCodeSamples.title}
-            links={kinLinks.serverCodeSamples.methods.createAccount}
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.createAccount}
             actions={[
               {
                 name: 'Create',
@@ -326,9 +337,62 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
           />
 
           <KinAction
+            title="Close An Empty Account"
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.closeAccount}
+            actions={[
+              {
+                name: 'Close Account',
+                onClick: () => {
+                  setLoading(true);
+                  handleCloseAccount({
+                    user: closeAccountUser,
+                    onSuccess: () => {
+                      setLoading(false);
+                      setShouldUpdate(true);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({
+                        text: "Couldn't close account!",
+                        happy: false,
+                      });
+                    },
+                  });
+                },
+              },
+              {
+                name: 'See in Explorer',
+                onClick: async () => {
+                  const user = userAccounts.find(
+                    (account) => account.name === closeAccountUser
+                  );
+
+                  const address = user?.publicKey;
+                  openExplorer({
+                    address,
+                    kinNetwork,
+                  });
+                },
+              },
+            ]}
+            inputs={[
+              {
+                name: 'User',
+                value: closeAccountUser,
+                options: ['App', ...userAccountNames],
+                onChange: (user) => {
+                  setCloseAccountUser(user);
+                  setDisplayBalance('');
+                },
+              },
+            ]}
+          />
+
+          <KinAction
             title="Get an Account Balance"
-            linksTitle={kinLinks.serverCodeSamples.title}
-            links={kinLinks.serverCodeSamples.methods.getBalance}
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.getBalance}
             actions={[
               {
                 name: 'Get Balance',
@@ -402,8 +466,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             <KinAction
               title="Request Airdrop (Test Network Only)"
               subTitle="Get some kin so you can start testing your transaction code"
-              linksTitle={kinLinks.serverCodeSamples.title}
-              links={kinLinks.serverCodeSamples.methods.requestAirdrop}
+              linksTitle={kinLinks.codeSamples.title}
+              links={kinLinks.codeSamples.methods.requestAirdrop}
               disabled={!airdropAmount}
               actions={[
                 {
@@ -450,8 +514,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             title="Pay Kin from App To User - Earn Transaction"
             subTitle="Requires 'verify' Webhook if you've added it on in Kinetic"
             subTitleLinks={kinLinks.webhooks}
-            linksTitle={kinLinks.serverCodeSamples.title}
-            links={kinLinks.serverCodeSamples.methods.submitPayment}
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.submitPayment}
             actions={[
               {
                 name: 'Pay',
@@ -503,8 +567,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             title="Send Batch of Earn Transactions"
             subTitle="Requires 'verify' Webhook if you've added it on in Kinetic"
             subTitleLinks={kinLinks.webhooks}
-            linksTitle={kinLinks.serverCodeSamples.title}
-            links={kinLinks.serverCodeSamples.methods.submitBatch}
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.submitBatch}
             actions={[
               {
                 name: 'Pay',
@@ -577,8 +641,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             title="Pay Kin from User To App - Spend Transaction"
             subTitle="Requires 'verify' Webhook if you've added it on in Kinetic"
             subTitleLinks={kinLinks.webhooks}
-            linksTitle={kinLinks.serverCodeSamples.title}
-            links={kinLinks.serverCodeSamples.methods.submitPayment}
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.submitPayment}
             actions={[
               {
                 name: 'Pay',
@@ -626,8 +690,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
           />
           <KinAction
             title="Send Kin from User to User -  P2P Transaction"
-            linksTitle={kinLinks.serverCodeSamples.title}
-            links={kinLinks.serverCodeSamples.methods.submitPayment}
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.submitPayment}
             subTitle="Requires 'verify' Webhook if you've added it on in Kinetic"
             subTitleLinks={kinLinks.webhooks}
             actions={[
@@ -700,8 +764,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
           <KinAction
             title="Get Transaction Details"
             subTitle="Transactions may take a little time to appear"
-            linksTitle={kinLinks.serverCodeSamples.title}
-            links={kinLinks.serverCodeSamples.methods.getTransaction}
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.getTransaction}
             actions={[
               {
                 name: 'Get Transaction',
@@ -764,8 +828,8 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
 
           <KinAction
             title="Get an Account History"
-            linksTitle={kinLinks.serverCodeSamples.title}
-            links={kinLinks.serverCodeSamples.methods.getBalance}
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.getHistory}
             actions={[
               {
                 name: 'Get History',
@@ -800,6 +864,87 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
               },
             ]}
             displayOutput={gotHistory ? gotHistory : null}
+          />
+
+          <KinAction
+            title="Get Account Information"
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.getAccountInfo}
+            actions={[
+              {
+                name: 'Get Account Info',
+                onClick: () => {
+                  setLoading(true);
+                  handleGetAccountInfo({
+                    user: accountInfoUser,
+                    onSuccess: (accountInfo) => {
+                      setLoading(false);
+                      setGotAccountInfo(accountInfo);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({
+                        text: "Couldn't get Account Info!",
+                        happy: false,
+                      });
+                    },
+                  });
+                },
+              },
+            ]}
+            inputs={[
+              {
+                name: 'User',
+                value: accountInfoUser,
+                options: ['App', ...userAccountNames],
+                onChange: (user) => {
+                  setAccountInfoUser(user);
+                  setGotAccountInfo('');
+                },
+              },
+            ]}
+            displayOutput={gotAccountInfo ? gotAccountInfo : null}
+          />
+          <br />
+          <br />
+          <KinAction
+            title="Get Token Accounts"
+            linksTitle={kinLinks.codeSamples.title}
+            links={kinLinks.codeSamples.methods.getTokenAccounts}
+            actions={[
+              {
+                name: 'Get History',
+                onClick: () => {
+                  setLoading(true);
+                  handleGetTokenAccounts({
+                    user: historyUser,
+                    onSuccess: (tokenAccounts) => {
+                      setLoading(false);
+                      setGotHistory(tokenAccounts);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({
+                        text: "Couldn't get Token Accounts!",
+                        happy: false,
+                      });
+                    },
+                  });
+                },
+              },
+            ]}
+            inputs={[
+              {
+                name: 'User',
+                value: tokenAccountsUser,
+                options: ['App', ...userAccountNames],
+                onChange: (user) => {
+                  setTokenAccountsUser(user);
+                  setGotTokenAccounts('');
+                },
+              },
+            ]}
+            displayOutput={gotTokenAccounts ? gotTokenAccounts : null}
           />
           <br />
           <br />
