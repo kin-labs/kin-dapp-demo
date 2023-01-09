@@ -236,6 +236,10 @@ export function KinClientApp({
                     kinNetwork: kineticClientNetwork,
                     onSuccess: () => {
                       setShouldUpdate(true);
+                      makeToast({
+                        text: 'Account Closed!',
+                        happy: true,
+                      });
                       setLoading(false);
                     },
                     onFailure: () => {
