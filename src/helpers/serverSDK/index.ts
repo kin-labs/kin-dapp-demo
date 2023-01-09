@@ -118,7 +118,7 @@ export async function handleCloseAccount({
     if (!baseUrl) throw new Error('No URL');
 
     const url = `${baseUrl}/close-account?user=${user}`;
-    const response: BalanceResponse = await axios.get(url);
+    const response: BalanceResponse = await axios.post(url);
     onSuccess(response.data);
   } catch (error) {
     console.log('🚀 ~ error', error);
