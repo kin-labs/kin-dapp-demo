@@ -1,6 +1,5 @@
 import { KineticSdk } from '@kin-kinetic/sdk';
 import { Keypair } from '@kin-kinetic/keypair';
-import { Commitment } from '@kin-kinetic/solana';
 
 import { saveKeypair, saveTransaction } from '..';
 
@@ -32,7 +31,6 @@ export async function handleCreateAccount({
 
     const account = await kineticClient.createAccount({
       owner: keypair,
-      commitment: Commitment.Confirmed,
     });
 
     const { errors } = account;

@@ -1,4 +1,4 @@
-import { KineticSdk, KineticSdkConfig } from '@kin-kinetic/sdk';
+import { Commitment, KineticSdk, KineticSdkConfig } from '@kin-kinetic/sdk';
 interface HandleSetupKinClient {
   kinNetwork: string;
   onSuccess: ({ client }: { client: KineticSdk }) => void;
@@ -19,11 +19,14 @@ export async function handleSetUpKinClient({
         : process.env.REACT_APP_KINETIC_ENDPOINT ||
           'https://sandbox.kinetic.host/';
 
+    const commitment = Commitment.Processed;
+
     if (index > 0 && endpoint) {
       const config: KineticSdkConfig = {
         environment,
         endpoint,
         index,
+        commitment,
       };
       console.log('🚀 ~ config', config);
 

@@ -1,5 +1,5 @@
 import { KineticSdk, MakeTransferOptions } from '@kin-kinetic/sdk';
-import { Commitment, TransactionType } from '@kin-kinetic/solana';
+import { TransactionType } from '@kin-kinetic/solana';
 import { saveTransaction, getKeypair } from '..';
 import { Keypair } from '@kin-kinetic/keypair';
 
@@ -43,7 +43,6 @@ export async function handleSendKin({
         destination,
         owner,
         type: transactionType,
-        commitment: Commitment.Confirmed,
       };
       console.log('🚀 ~ transactionOptions', transactionOptions);
 

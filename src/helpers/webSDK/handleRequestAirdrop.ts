@@ -1,5 +1,4 @@
 import { KineticSdk } from '@kin-kinetic/sdk';
-import { Commitment } from '@kin-kinetic/solana';
 
 interface HandleRequestAirdrop {
   kineticClient: KineticSdk;
@@ -22,7 +21,6 @@ export async function handleRequestAirdrop({
     const airdrop = await kineticClient.requestAirdrop({
       account: to,
       amount: amount,
-      commitment: Commitment.Confirmed,
     });
     console.log('🚀 ~ airdrop', airdrop);
 
