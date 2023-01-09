@@ -32,7 +32,7 @@ export async function handleCreateAccount({
 
     const account = await kineticClient.createAccount({
       owner: keypair,
-      commitment: Commitment.Finalized,
+      commitment: Commitment.Confirmed,
     });
 
     const { errors } = account;

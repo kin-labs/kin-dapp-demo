@@ -43,7 +43,7 @@ export async function handleSendKin({
         destination,
         owner,
         type: transactionType,
-        commitment: Commitment.Finalized,
+        commitment: Commitment.Confirmed,
       };
       console.log('🚀 ~ transactionOptions', transactionOptions);
 

@@ -22,7 +22,7 @@ export async function handleRequestAirdrop({
     const airdrop = await kineticClient.requestAirdrop({
       account: to,
       amount: amount,
-      commitment: Commitment.Finalized,
+      commitment: Commitment.Confirmed,
     });
     console.log('🚀 ~ airdrop', airdrop);
 
