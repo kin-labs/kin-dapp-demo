@@ -349,6 +349,10 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
                     user: closeAccountUser,
                     onSuccess: () => {
                       setLoading(false);
+                      makeToast({
+                        text: 'Account Closed Successfully!',
+                        happy: true,
+                      });
                       setShouldUpdate(true);
                     },
                     onFailure: () => {
