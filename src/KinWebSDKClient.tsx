@@ -25,6 +25,7 @@ import './Kin.scss';
 import { handleGetTransactionData } from './helpers/webSDK/handleGetTransactionData';
 import { handleGetHistory } from './helpers/webSDK/handleGetHistory';
 import { handleGetAccountInfo } from './helpers/webSDK/handleGetAccountInfo';
+import { handleGetTokenAccounts } from './helpers/webSDK/handleGetTokenAccounts';
 import { handleCloseAccount } from './helpers/webSDK/handleCloseAccount';
 
 interface KinClientAppProps {
@@ -82,6 +83,9 @@ export function KinClientApp({
 
   const [accountInfoUser, setAccountInfoUser] = useState('');
   const [accountInfoData, setAccountInfoData] = useState('');
+
+  const [tokenAccountsUser, setTokenAccountsUser] = useState('');
+  const [tokenAccountsData, setTokenAccountsData] = useState('');
 
   const [seeWallet, setSeeWallet] = useState('');
 
@@ -482,7 +486,7 @@ export function KinClientApp({
           />
           <br />
           <br />
-          <h3 className="Kin-section">{`Get Transaction Details and History`}</h3>
+          <h3 className="Kin-section">{`Get Account / Transaction Data`}</h3>
           <KinAction
             title="View Transaction"
             links={[kinLinks.codeSamples.methods.getTransaction[0]]}
@@ -638,6 +642,55 @@ export function KinClientApp({
               },
             ]}
             displayOutput={accountInfoData ? accountInfoData : null}
+          />
+          <KinAction
+            title="Get Token Accounts"
+            subTitle="Get a list of Token Accounts for this Solana Account"
+            links={[kinLinks.codeSamples.methods.getTokenAccounts[0]]}
+            disabled={!userAccounts.length}
+            actions={[
+              {
+                name: 'Get Token Accounts',
+                onClick: () => {
+                  setLoading(true);
+                  handleGetTokenAccounts({
+                    kineticClient,
+                    user: tokenAccountsUser || userAccounts[0],
+                    kinNetwork: kineticClientNetwork,
+                    onSuccess: (tokenAccounts: string) => {
+                      setLoading(false);
+                      setTokenAccountsData(tokenAccounts);
+                    },
+                    onFailure: () => {
+                      setLoading(false);
+                      makeToast({
+                        text: "Couldn't get Token Accounts!",
+                        happy: false,
+                      });
+                    },
+                  });
+                },
+              },
+              {
+                name: 'View on Solana Explorer',
+                onClick: () => {
+                  const address = tokenAccountsUser;
+                  openExplorer({ address, solanaNetwork: kinNetwork });
+                },
+              },
+            ]}
+            inputs={[
+              {
+                name: 'User',
+                value: tokenAccountsUser,
+                options: userAccounts,
+                onChange: (user) => {
+                  setTokenAccountsUser(user);
+                  setTokenAccountsData('');
+                },
+              },
+            ]}
+            displayOutput={tokenAccountsData ? tokenAccountsData : null}
           />
           <br />
           <br />

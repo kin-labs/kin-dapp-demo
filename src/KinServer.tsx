@@ -759,7 +759,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
 
           <br />
           <br />
-          <h3 className="Kin-section">{`Get Transaction Details and History`}</h3>
+          <h3 className="Kin-section">{`Get Account / Transaction Data`}</h3>
 
           <KinAction
             title="Get Transaction Details"
@@ -905,8 +905,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             ]}
             displayOutput={gotAccountInfo ? gotAccountInfo : null}
           />
-          <br />
-          <br />
+
           <KinAction
             title="Get Token Accounts"
             linksTitle={kinLinks.codeSamples.title}
