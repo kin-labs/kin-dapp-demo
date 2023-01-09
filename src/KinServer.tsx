@@ -913,14 +913,14 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
             links={kinLinks.codeSamples.methods.getTokenAccounts}
             actions={[
               {
-                name: 'Get History',
+                name: 'Get Token Accounts',
                 onClick: () => {
                   setLoading(true);
                   handleGetTokenAccounts({
                     user: historyUser,
                     onSuccess: (tokenAccounts) => {
                       setLoading(false);
-                      setGotHistory(tokenAccounts);
+                      setGotTokenAccounts(tokenAccounts);
                     },
                     onFailure: () => {
                       setLoading(false);
