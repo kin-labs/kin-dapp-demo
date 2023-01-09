@@ -920,7 +920,7 @@ export function KinServerApp({ makeToast, setLoading }: KinServerAppProps) {
                 onClick: () => {
                   setLoading(true);
                   handleGetTokenAccounts({
-                    user: historyUser,
+                    user: tokenAccountsUser,
                     onSuccess: (tokenAccounts) => {
                       setLoading(false);
                       setGotTokenAccounts(tokenAccounts);
