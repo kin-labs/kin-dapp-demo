@@ -1680,29 +1680,29 @@
     bs58 "^5.0.0"
     uuid "^8.3.2"
 
-"@kin-kinetic/keypair@1.0.0-rc.13", "@kin-kinetic/keypair@^1.0.0-rc.13":
-  version "1.0.0-rc.13"
-  resolved "https://registry.yarnpkg.com/@kin-kinetic/keypair/-/keypair-1.0.0-rc.13.tgz#f352f14791a1304e5eb262f6ae7381d1817e13b1"
-  integrity sha512-IX3xvWxuvkt2CYFmsWgF4cYkR7Iz6hiFhgksUD8qPB7aagQn14pnFsF72DvjoRYynHC6AERaE0AIfwpqcM505Q==
+"@kin-kinetic/keypair@1.0.0-rc.16", "@kin-kinetic/keypair@^1.0.0-rc.16":
+  version "1.0.0-rc.16"
+  resolved "https://registry.yarnpkg.com/@kin-kinetic/keypair/-/keypair-1.0.0-rc.16.tgz#11dfede621c50ab7b6a7a2d1f6f353b75e550f80"
+  integrity sha512-S5ocivAD1d4VllrSKkwhXS6F1RP6Ujn2WHpa+v6hn6yp30aHJqRHCIZa4u0OvXUiCqVxHBvE6RESAa8fFSz2+g==
   dependencies:
     "@scure/bip39" "1.1.0"
-    "@solana/web3.js" "1.70.1"
+    "@solana/web3.js" "1.73.0"
     bs58 "4.0.1"
     buffer "5.7.1"
     micro-ed25519-hdkey "0.1.2"
     tslib "2.4.1"
     util "0.12.5"
 
-"@kin-kinetic/sdk@^1.0.0-rc.13":
-  version "1.0.0-rc.13"
-  resolved "https://registry.yarnpkg.com/@kin-kinetic/sdk/-/sdk-1.0.0-rc.13.tgz#053549fe59cf5054e16da57c2005219c1d2b6e23"
-  integrity sha512-s37qMYOaqMJB0nlAEGE8bVGr95qKNXGtjH3SS0QXsSZ4m2NdWyWfC9FAKZr6OgauYP4SKviQI0+PkdfMOS5eFg==
+"@kin-kinetic/sdk@^1.0.0-rc.16":
+  version "1.0.0-rc.16"
+  resolved "https://registry.yarnpkg.com/@kin-kinetic/sdk/-/sdk-1.0.0-rc.16.tgz#6878a9ea5e8c13fd1cbcddf02d8e1815496d46d7"
+  integrity sha512-MDNvV9Zl+8/0E8XN5C56dikNBLHLlbNjg6aC/haRgnc4dsDRusWTT2z2HuPSQqRLq5ePh8V0DwYQ4HOLYfO9Lw==
   dependencies:
-    "@kin-kinetic/keypair" "1.0.0-rc.13"
-    "@kin-kinetic/solana" "1.0.0-rc.13"
+    "@kin-kinetic/keypair" "1.0.0-rc.16"
+    "@kin-kinetic/solana" "1.0.0-rc.16"
     "@scure/bip39" "1.1.0"
-    "@solana/spl-token" "0.3.6"
-    "@solana/web3.js" "1.70.1"
+    "@solana/spl-token" "0.3.7"
+    "@solana/web3.js" "1.73.0"
     axios "0.27.2"
     bignumber.js "9.0.2"
     bs58 "4.0.1"
@@ -1711,13 +1711,13 @@
     tslib "2.4.1"
     util "0.12.5"
 
-"@kin-kinetic/solana@1.0.0-rc.13", "@kin-kinetic/solana@^1.0.0-rc.13":
-  version "1.0.0-rc.13"
-  resolved "https://registry.yarnpkg.com/@kin-kinetic/solana/-/solana-1.0.0-rc.13.tgz#2f02d787280632e647d55c2ea6f471700efc23e5"
-  integrity sha512-u/2xOke2qGzxyFVLWjvbBH8n/nXVv+obBza2+4UdDtAWIjAQ9jsEWOBY9UiMuGcPBGdo3/BTi7/Qn/RC+PhYPQ==
+"@kin-kinetic/solana@1.0.0-rc.16", "@kin-kinetic/solana@^1.0.0-rc.16":
+  version "1.0.0-rc.16"
+  resolved "https://registry.yarnpkg.com/@kin-kinetic/solana/-/solana-1.0.0-rc.16.tgz#629e6bd0c1ecc2ed3369f59f40b811bf4fed3a88"
+  integrity sha512-pnE5Mj+dkDRKe9YCQZ2e7NEPCtDTb9hqoTrOuRG0q5exI8dHOMRtxeLF0Vss9jSlslqq44ESnU4EkGJOEXr9WA==
   dependencies:
-    "@solana/spl-token" "0.3.6"
-    "@solana/web3.js" "1.70.1"
+    "@solana/spl-token" "0.3.7"
+    "@solana/web3.js" "1.73.0"
     axios "0.27.2"
     bignumber.js "9.0.2"
     tslib "2.4.1"
@@ -2046,10 +2046,10 @@
   dependencies:
     buffer "~6.0.3"
 
-"@solana/spl-token@0.3.6":
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/@solana/spl-token/-/spl-token-0.3.6.tgz#35473ad2ed71fe91e5754a2ac72901e1b8b26a42"
-  integrity sha512-P9pTXjDIRvVbjr3J0mCnSamYqLnICeds7IoH1/Ro2R9OBuOHdp5pqKZoscfZ3UYrgnCWUc1bc9M2m/YPHjw+1g==
+"@solana/spl-token@0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@solana/spl-token/-/spl-token-0.3.7.tgz#6f027f9ad8e841f792c32e50920d9d2e714fc8da"
+  integrity sha512-bKGxWTtIw6VDdCBngjtsGlKGLSmiu/8ghSt/IOYJV24BsymRbgq7r12GToeetpxmPaZYLddKwAz7+EwprLfkfg==
   dependencies:
     "@solana/buffer-layout" "^4.0.0"
     "@solana/buffer-layout-utils" "^0.2.0"
@@ -2513,16 +2513,17 @@
     "@wallet-standard/app" "^1.0.0"
     "@wallet-standard/base" "^1.0.0"
 
-"@solana/web3.js@1.70.1":
-  version "1.70.1"
-  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.70.1.tgz#4a2df47cc32a0f67be5161e772b2ceb6512281fa"
-  integrity sha512-AnaqCF1cJ3w7d0yhvLGAKAcRI+n5o+ursQihhoTe4cUh8/9d4gbT73SoHYElS7e67OtAgLmSfbcC5hcOAgdvnQ==
+"@solana/web3.js@1.73.0":
+  version "1.73.0"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.73.0.tgz#c65f9f954ac80fca6952765c931dd72e57e1b572"
+  integrity sha512-YrgX3Py7ylh8NYkbanoINUPCj//bWUjYZ5/WPy9nQ9SK3Cl7QWCR+NmbDjmC/fTspZGR+VO9LTQslM++jr5PRw==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@noble/ed25519" "^1.7.0"
     "@noble/hashes" "^1.1.2"
     "@noble/secp256k1" "^1.6.3"
     "@solana/buffer-layout" "^4.0.0"
+    agentkeepalive "^4.2.1"
     bigint-buffer "^1.1.5"
     bn.js "^5.0.0"
     borsh "^0.7.0"
@@ -3959,6 +3960,15 @@ agent-base@6:
   integrity sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==
   dependencies:
     debug "4"
+
+agentkeepalive@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/agentkeepalive/-/agentkeepalive-4.2.1.tgz#a7975cbb9f83b367f06c90cc51ff28fe7d499717"
+  integrity sha512-Zn4cw2NEqd+9fiSVWMscnjyQ1a8Yfoc5oBajLeo5w+YBHgDUcEBY2hS4YpTz6iN5f/2zQiktcuM6tS8x1p9dpA==
+  dependencies:
+    debug "^4.1.0"
+    depd "^1.1.2"
+    humanize-ms "^1.2.1"
 
 ajv-formats@^2.1.1:
   version "2.1.1"
@@ -5567,7 +5577,7 @@ depd@2.0.0:
   resolved "https://registry.yarnpkg.com/depd/-/depd-2.0.0.tgz#b696163cc757560d09cf22cc8fad1571b79e76df"
   integrity sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==
 
-depd@~1.1.2:
+depd@^1.1.2, depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha512-7emPTl6Dpo6JRXOXjLRxck+FlLRX5847cLKEn00PLAgc3g2hTZZgr+e4c2v6QpSmLeFP3n5yUo7ft6avBK/5jQ==
@@ -6086,7 +6096,7 @@ eslint-config-prettier@6.11.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-config-react-app@^7.0.0:
+eslint-config-react-app@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-7.0.1.tgz#73ba3929978001c5c86274c017ea57eb5fa644b4"
   integrity sha512-K6rNzvkIeHaTd8m/QEh1Zko0KI7BACWkkneSs6s9cKZC/J27X3eZR6Upt1jkmZ/4FK+XUOPPxMEN7+lbUXfSlA==
@@ -7237,6 +7247,13 @@ human-signals@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
+
+humanize-ms@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/humanize-ms/-/humanize-ms-1.2.1.tgz#c46e3159a293f6b896da29316d8b6fe8bb79bbed"
+  integrity sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==
+  dependencies:
+    ms "^2.0.0"
 
 iconv-lite@0.4.24:
   version "0.4.24"
@@ -8824,7 +8841,7 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-ms@2.1.3, ms@^2.1.1:
+ms@2.1.3, ms@^2.0.0, ms@^2.1.1:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
@@ -10193,7 +10210,7 @@ react-collapsible@^2.8.4:
   resolved "https://registry.yarnpkg.com/react-collapsible/-/react-collapsible-2.10.0.tgz#57330f9f4f968a41ece49c651b56cf30f9a06d19"
   integrity sha512-kEVsmlFfXBMTCnU5gwIv19MdmPAhbIPzz5Er37TiJSzRKS0IHrqAKQyQeHEmtoGIQMTcVI46FzE4z3NlVTx77A==
 
-react-dev-utils@^12.0.0:
+react-dev-utils@^12.0.1:
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-12.0.1.tgz#ba92edb4a1f379bd46ccd6bcd4e7bc398df33e73"
   integrity sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==
@@ -10298,10 +10315,10 @@ react-refresh@^0.11.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"
   integrity sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==
 
-react-scripts@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-5.0.0.tgz#6547a6d7f8b64364ef95273767466cc577cb4b60"
-  integrity sha512-3i0L2CyIlROz7mxETEdfif6Sfhh9Lfpzi10CtcGs1emDQStmZfWjJbAIMtRD0opVUjQuFWqHZyRZ9PPzKCFxWg==
+react-scripts@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-5.0.1.tgz#6285dbd65a8ba6e49ca8d651ce30645a6d980003"
+  integrity sha512-8VAmEm/ZAwQzJ+GOMLbBsTdDKOpuZh7RPs0UymvBR2vRk4iZWCskjbFnxqjrzoIvlNNRZ3QJFx6/qDSi6zSnaQ==
   dependencies:
     "@babel/core" "^7.16.0"
     "@pmmmwh/react-refresh-webpack-plugin" "^0.5.3"
@@ -10319,7 +10336,7 @@ react-scripts@5.0.0:
     dotenv "^10.0.0"
     dotenv-expand "^5.1.0"
     eslint "^8.3.0"
-    eslint-config-react-app "^7.0.0"
+    eslint-config-react-app "^7.0.1"
     eslint-webpack-plugin "^3.1.1"
     file-loader "^6.2.0"
     fs-extra "^10.0.0"
@@ -10336,7 +10353,7 @@ react-scripts@5.0.0:
     postcss-preset-env "^7.0.1"
     prompts "^2.4.2"
     react-app-polyfill "^3.0.0"
-    react-dev-utils "^12.0.0"
+    react-dev-utils "^12.0.1"
     react-refresh "^0.11.0"
     resolve "^1.20.0"
     resolve-url-loader "^4.0.0"
